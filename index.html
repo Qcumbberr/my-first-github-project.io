@@ -165,7 +165,7 @@
         .hero {
             height: 100vh;
             background: linear-gradient(rgba(42, 31, 29, 0.7), rgba(42, 31, 29, 0.7)), 
-                        url('img/main_bc.jpg') no-repeat center center/cover;
+                        url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -683,7 +683,7 @@
         .about-hero {
             height: 60vh;
             background: linear-gradient(rgba(42, 31, 29, 0.8), rgba(42, 31, 29, 0.8)), 
-                        url('img/About_Us_Bc.jpg') no-repeat center center/cover;
+                        url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -1454,14 +1454,25 @@
             "Карамельная пенка": { price: 70, nutrition: { calories: 60, protein: 1, fat: 4, carbs: 5 } },
             "Кардамон": { price: 40, nutrition: { calories: 6, protein: 0.2, fat: 0.4, carbs: 1.3 } },
             "Роза": { price: 50, nutrition: { calories: 3, protein: 0, fat: 0, carbs: 0.6 } },
-            "Фисташки": { price: 60, nutrition: { calories: 80, protein: 3, fat: 7, carbs: 4 } }
+            "Фисташки": { price: 60, nutrition: { calories: 80, protein: 3, fat: 7, carbs: 4 } },
+            "Кокосовая стружка": { price: 45, nutrition: { calories: 35, protein: 0.5, fat: 3, carbs: 2 } },
+            "Соленая карамель": { price: 70, nutrition: { calories: 95, protein: 0.5, fat: 4, carbs: 14 } },
+            "Миндальное молоко": { price: 80, nutrition: { calories: 30, protein: 1, fat: 2.5, carbs: 1 } },
+            "Овсяное молоко": { price: 70, nutrition: { calories: 45, protein: 1, fat: 2, carbs: 6 } },
+            "Соевое молоко": { price: 60, nutrition: { calories: 40, protein: 3, fat: 2, carbs: 3 } },
+            "Кокосовый сироп": { price: 65, nutrition: { calories: 50, protein: 0, fat: 0, carbs: 13 } },
+            "Малиновый сироп": { price: 60, nutrition: { calories: 42, protein: 0, fat: 0, carbs: 10.5 } },
+            "Вишневый сироп": { price: 60, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11 } },
+            "Базилик": { price: 40, nutrition: { calories: 3, protein: 0.2, fat: 0.1, carbs: 0.6 } },
+            "Лаванда": { price: 50, nutrition: { calories: 2, protein: 0.1, fat: 0, carbs: 0.4 } },
+            "Розмарин": { price: 45, nutrition: { calories: 4, protein: 0.1, fat: 0.2, carbs: 0.8 } }
         };
 
         // Полная база данных кофе с допингами и БЖУ
         const coffeeData = {
             1: {
                 name: "Эспрессо",
-                image: "img/espresso.jpg",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
                 description: "Классический итальянский эспрессо - крепкий, насыщенный кофе с плотной пенкой. Идеальный выбор для настоящих ценителей кофе. Подается в маленькой чашке для максимального сохранения аромата.",
                 price: 290,
                 nutrition: {
@@ -1481,7 +1492,7 @@
             },
             2: {
                 name: "Капучино",
-                image: "img/Capuchino.jpg",
+                image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
                 description: "Идеальное сочетание эспрессо, молока и молочной пенки. Наш бариста создает нежную пенку, которая сохраняет температуру напитка и подчеркивает вкус кофе. Украшается рисунком на пенке.",
                 price: 350,
                 nutrition: {
@@ -1501,7 +1512,7 @@
             },
             3: {
                 name: "Латте",
-                image: "img/latte.jpg",
+                image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
                 description: "Нежный кофейный напиток на основе эспрессо с большим количеством вспененного молока. Имеет мягкий вкус и кремовую текстуру. Идеален для тех, кто предпочитает менее крепкий кофе.",
                 price: 380,
                 nutrition: {
@@ -1521,7 +1532,7 @@
             },
             4: {
                 name: "Американо",
-                image: "img/Amerikano.jpg",
+                image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Эспрессо, разбавленный горячей водой. Сохраняет насыщенный вкус и аромат кофе, но имеет меньшую крепость. Отличный выбор для длительного наслаждения кофе.",
                 price: 310,
                 nutrition: {
@@ -1541,7 +1552,7 @@
             },
             5: {
                 name: "Моккачино",
-                image: "img/Moccachino.jpg",
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Восхитительное сочетание эспрессо, шоколада и молока. Наш моккачино готовится с использованием качественного какао и украшается взбитыми сливками. Настоящее удовольствие для сладкоежек.",
                 price: 420,
                 nutrition: {
@@ -1561,7 +1572,7 @@
             },
             6: {
                 name: "Раф кофе",
-                image: "img/Raf.jpg",
+                image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
                 description: "Популярный российский кофейный напиток, приготовленный на основе эспрессо, сливок и ванильного сахара. Взбивается в питчере до образования нежной пенки. Имеет мягкий сливочный вкус.",
                 price: 450,
                 nutrition: {
@@ -1581,7 +1592,7 @@
             },
             7: {
                 name: "Флэт Уайт",
-                image: "img/Flat_White.jpg",
+                image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
                 description: "Австралийский кофейный напиток с двойной порцией эспрессо и тонким слоем микрофомы. Более крепкий, чем латте, с насыщенным кофейным вкусом.",
                 price: 390,
                 nutrition: {
@@ -1600,7 +1611,7 @@
             },
             8: {
                 name: "Айс Латте",
-                image: "img/Iced_latte.jpg",
+                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80",
                 description: "Освежающий холодный кофейный напиток на основе эспрессо и охлажденного молока. Подается со льдом, идеален в жаркую погоду.",
                 price: 370,
                 nutrition: {
@@ -1619,7 +1630,7 @@
             },
             9: {
                 name: "Макиато",
-                image: "img/Macchiato.jpg",
+                image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Эспрессо с небольшим количеством молочной пенки. Сохраняет крепость эспрессо, но с более мягким вкусом благодаря пенке.",
                 price: 320,
                 nutrition: {
@@ -1637,7 +1648,7 @@
             },
             10: {
                 name: "Кофе по-турецки",
-                image: "img/Tyrish.jpg",
+                image: "https://images.unsplash.com/photo-1593443320739-77f74939d6da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Традиционный турецкий кофе, приготовленный в джезве. Имеет насыщенный вкус и аромат, подается с осадком.",
                 price: 280,
                 nutrition: {
@@ -1653,6 +1664,101 @@
                     "Роза",
                     "Фисташки"
                 ]
+            },
+            11: {
+                name: "Колд Брю",
+                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80",
+                description: "Кофе холодного заваривания, который настаивается в холодной воде 12-24 часа. Обладает мягким вкусом с низкой кислотностью.",
+                price: 360,
+                nutrition: {
+                    calories: 5,
+                    protein: 0.3,
+                    fat: 0.1,
+                    carbs: 0.7
+                },
+                addons: [
+                    "Кокосовое молоко",
+                    "Ванильный сироп",
+                    "Кленовый сироп",
+                    "Лимон",
+                    "Мята"
+                ]
+            },
+            12: {
+                name: "Аффогато",
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
+                description: "Итальянский десерт, состоящий из шарика ванильного мороженого, залитого горячим эспрессо. Идеальное сочетание горячего и холодного.",
+                price: 420,
+                nutrition: {
+                    calories: 180,
+                    protein: 4.2,
+                    fat: 8.5,
+                    carbs: 22.3
+                },
+                addons: [
+                    "Шоколадный соус",
+                    "Карамельный соус",
+                    "Тертый шоколад",
+                    "Миндальные хлопья",
+                    "Кокосовая стружка"
+                ]
+            },
+            13: {
+                name: "Кортадо",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+                description: "Испанский кофейный напиток, состоящий из равных частей эспрессо и теплого молока. Имеет насыщенный вкус без излишней крепости.",
+                price: 340,
+                nutrition: {
+                    calories: 60,
+                    protein: 3.8,
+                    fat: 3.2,
+                    carbs: 4.5
+                },
+                addons: [
+                    "Коричневый сахар",
+                    "Корица",
+                    "Кардамон",
+                    "Ванильный экстракт",
+                    "Мед"
+                ]
+            },
+            14: {
+                name: "Вьетнамский кофе",
+                image: "https://images.unsplash.com/photo-1593443320739-77f74939d6da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
+                description: "Традиционный вьетнамский кофе, приготовленный через фин и смешанный со сгущенным молоком. Насыщенный, сладкий и крепкий.",
+                price: 380,
+                nutrition: {
+                    calories: 150,
+                    protein: 4.2,
+                    fat: 5.8,
+                    carbs: 22.1
+                },
+                addons: [
+                    "Экстра порция сгущенки",
+                    "Кокосовые сливки",
+                    "Лед",
+                    "Ванильный сироп",
+                    "Карамельный сироп"
+                ]
+            },
+            15: {
+                name: "Матча Латте",
+                image: "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1771&q=80",
+                description: "Традиционный японский напиток из порошка матча, взбитый с молоком. Богат антиоксидантами, имеет нежный травянистый вкус.",
+                price: 430,
+                nutrition: {
+                    calories: 120,
+                    protein: 7.2,
+                    fat: 4.8,
+                    carbs: 14.3
+                },
+                addons: [
+                    "Кокосовое молоко",
+                    "Миндальное молоко",
+                    "Ванильный сироп",
+                    "Мед",
+                    "Кокосовая стружка"
+                ]
             }
         };
 
@@ -1660,7 +1766,7 @@
         const dessertsData = {
             1: {
                 name: "Тирамису",
-                image: "img/Tiramisu.jpg",
+                image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Классический итальянский десерт из печенья савоярди, пропитанного эспрессо, с нежным кремом маскарпоне и какао.",
                 price: 450,
                 nutrition: {
@@ -1672,7 +1778,7 @@
             },
             2: {
                 name: "Чизкейк Нью-Йорк",
-                image: "img/Cake_NY.jpg",
+                image: "https://images.unsplash.com/photo-1567306301408-9b74779a11af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Нежный сливочный чизкейк с песочной основой. Подается с ягодным соусом на выбор.",
                 price: 380,
                 nutrition: {
@@ -1684,7 +1790,7 @@
             },
             3: {
                 name: "Круассан с шоколадом",
-                image: "img/Cryasan.jpg",
+                image: "https://images.unsplash.com/photo-1555507036-ab794f27d2e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Свежий слоеный круассан с начинкой из бельгийского шоколада. Идеально сочетается с кофе.",
                 price: 220,
                 nutrition: {
@@ -1696,7 +1802,7 @@
             },
             4: {
                 name: "Макаруны",
-                image: "img/Macaroon.jpg",
+                image: "https://images.unsplash.com/photo-1558326567-98ae2405596b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1771&q=80",
                 description: "Набор из 4-х нежных французских пирожных с различными вкусами: ваниль, шоколад, малина, фисташка.",
                 price: 320,
                 nutrition: {
@@ -1708,7 +1814,7 @@
             },
             5: {
                 name: "Брауни",
-                image: "img/brayni.jpg",
+                image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Шоколадный брауни с орехами пекан, подается теплым с шариком ванильного мороженого.",
                 price: 350,
                 nutrition: {
@@ -1720,7 +1826,7 @@
             },
             6: {
                 name: "Медовик",
-                image: "img/medovik.jpg",
+                image: "https://images.unsplash.com/photo-1587241321921-91a834d6d191?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                 description: "Традиционный русский торт из медовых коржей со сметанным кремом.",
                 price: 280,
                 nutrition: {
@@ -1728,6 +1834,54 @@
                     protein: 5.1,
                     fat: 14.6,
                     carbs: 43.8
+                }
+            },
+            7: {
+                name: "Эклеры",
+                image: "https://images.unsplash.com/photo-1623334044303-241021148842?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
+                description: "Нежные заварные пирожные с воздушным тестом и кремовой начинкой. Подаются с шоколадной глазурью.",
+                price: 270,
+                nutrition: {
+                    calories: 290,
+                    protein: 4.8,
+                    fat: 16.2,
+                    carbs: 32.5
+                }
+            },
+            8: {
+                name: "Канноли",
+                image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1776&q=80",
+                description: "Традиционные сицилийские трубочки из хрустящего теста с начинкой из сыра рикотта и цукатов.",
+                price: 320,
+                nutrition: {
+                    calories: 380,
+                    protein: 8.2,
+                    fat: 22.8,
+                    carbs: 35.4
+                }
+            },
+            9: {
+                name: "Панна Котта",
+                image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
+                description: "Нежный итальянский десерт из сливок, ванили и желатина. Подается с ягодным соусом.",
+                price: 290,
+                nutrition: {
+                    calories: 310,
+                    protein: 4.2,
+                    fat: 24.5,
+                    carbs: 20.8
+                }
+            },
+            10: {
+                name: "Птифуры",
+                image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
+                description: "Ассорти из миниатюрных французских пирожных с различными начинками и глазурью.",
+                price: 360,
+                nutrition: {
+                    calories: 340,
+                    protein: 3.8,
+                    fat: 18.6,
+                    carbs: 40.2
                 }
             }
         };
@@ -2420,7 +2574,7 @@
         function confirmOrder() {
             const name = document.getElementById('customerName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
-            const address = document.getElementById('deliveryAddress').value.trim();
+            const address = document.getElementById('
             
             if (!name || !phone || !address) {
                 alert('Пожалуйста, заполните все обязательные поля: имя, телефон и адрес доставки');
@@ -2502,6 +2656,7 @@
 </body>
 
 </html>
+
 
 
 
