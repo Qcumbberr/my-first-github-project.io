@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кофейня "Уютная Чашка"</title>
+    <style>
+        /* Основные стили и переменные цветов */
+        :root {
+            --dark-bg: #2a1f1d;
+            --dark-card: #3a2c28;
+            --beige: #d7ccc8;
+            --light-beige: #efebe9;
+            --brown: #8d6e63;
+            --accent-brown: #a1887f;
+            --text-light: #f5f5f5;
+            --text-dark: #5d4037;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Шапка сайта */
+        header {
+            background-color: var(--dark-card);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--beige);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--brown);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--beige);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            color: var(--brown);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            margin-left: 2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--brown);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--beige);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Основной контент */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(42, 31, 29, 0.7), rgba(42, 31, 29, 0.7)), 
+                        url('img/main_bc.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            color: var(--beige);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            color: var(--light-beige);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--brown);
+            color: var(--text-light);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-brown);
+        }
+
+        /* Секция с видами кофе */
+        .coffee-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--beige);
+        }
+
+        .menu-category-title {
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--beige);
+            border-bottom: 2px solid var(--brown);
+            padding-bottom: 0.5rem;
+        }
+
+        .coffee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .coffee-card {
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .coffee-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .coffee-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background-color: var(--brown); /* Запасной фон если изображение не загрузится */
+        }
+
+        .coffee-info {
+            padding: 1.5rem;
+        }
+
+        .coffee-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--beige);
+        }
+
+        .coffee-price {
+            color: var(--brown);
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .nutrition-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--light-beige);
+            opacity: 0.8;
+        }
+
+        /* Модальное окно с описанием */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            max-width: 900px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--beige);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--brown);
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background-color: var(--brown); /* Запасной фон */
+        }
+
+        .modal-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--beige);
+        }
+
+        .modal-description {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--light-beige);
+            line-height: 1.7;
+        }
+
+        .modal-price {
+            font-size: 1.6rem;
+            color: var(--brown);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .modal-nutrition {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(141, 110, 99, 0.2);
+            border-radius: 8px;
+        }
+
+        .nutrition-item {
+            text-align: center;
+        }
+
+        .nutrition-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--beige);
+        }
+
+        .nutrition-label {
+            font-size: 0.85rem;
+            color: var(--light-beige);
+            opacity: 0.8;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--brown);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--accent-brown);
+        }
+
+        /* Секция допингов */
+        .addons-section {
+            margin-top: 2.5rem;
+        }
+
+        .addons-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--beige);
+            border-bottom: 2px solid var(--brown);
+            padding-bottom: 0.5rem;
+        }
+
+        .addons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .addon-item {
+            background-color: rgba(141, 110, 99, 0.25);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--brown);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .addon-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .addon-item.selected {
+            background-color: rgba(141, 110, 99, 0.5);
+            border-color: var(--accent-brown);
+        }
+
+        .addon-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--beige);
+            font-size: 1.1rem;
+        }
+
+        .addon-price {
+            color: var(--light-beige);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .addon-nutrition {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--light-beige);
+            opacity: 0.8;
+        }
+
+        /* Страницы */
+        .page {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Страница "О нас" */
+        .about-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(42, 31, 29, 0.8), rgba(42, 31, 29, 0.8)), 
+                        url('img/About_Us_Bc.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-card {
+            background-color: var(--dark-card);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .about-card h3 {
+            color: var(--beige);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(141, 110, 99, 0.2);
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-text {
+            color: var(--light-beige);
+            font-size: 1rem;
+        }
+
+        /* Страница корзины */
+        .cart-container {
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-size: 1.2rem;
+            color: var(--beige);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .cart-item-name:hover {
+            color: var(--brown);
+        }
+
+        .cart-item-addons {
+            font-size: 0.9rem;
+            color: var(--light-beige);
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: var(--brown);
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-btn {
+            background-color: var(--brown);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--accent-brown);
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            color: var(--beige);
+        }
+
+        .checkout-btn {
+            background-color: var(--brown);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+            float: right;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--accent-brown);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: var(--light-beige);
+        }
+
+        /* Форма оформления заказа */
+        .checkout-form {
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--beige);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--brown);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-brown);
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .form-btn {
+            background-color: var(--brown);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-btn:hover {
+            background-color: var(--accent-brown);
+        }
+
+        .form-btn.prev {
+            background-color: rgba(141, 110, 99, 0.5);
+        }
+
+        .form-btn.prev:hover {
+            background-color: rgba(141, 110, 99, 0.7);
+        }
+
+        /* Улучшенная форма оформления заказа */
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .order-summary {
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .order-summary h3 {
+            color: var(--beige);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--brown);
+            padding-bottom: 0.5rem;
+        }
+
+        .order-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-total {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--beige);
+            text-align: right;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--brown);
+        }
+
+        /* Плашка завершения заказа */
+        .order-success {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .order-success.active {
+            display: flex;
+        }
+
+        .success-content {
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 95%;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-title {
+            font-size: 2.2rem;
+            color: var(--beige);
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: var(--light-beige);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .success-details {
+            background-color: rgba(141, 110, 99, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .success-details h4 {
+            color: var(--beige);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .success-details p {
+            margin-bottom: 0.5rem;
+            color: var(--light-beige);
+        }
+
+        .success-btn {
+            background-color: var(--brown);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .success-btn:hover {
+            background-color: var(--accent-brown);
+        }
+
+        /* Подвал */
+        footer {
+            background-color: var(--dark-card);
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--beige);
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--light-beige);
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--brown);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--beige);
+            font-size: 1rem;
+        }
+
+        /* Кнопка возврата наверх */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--brown);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--accent-brown);
+            transform: translateY(-3px);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .coffee-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .addons-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+                display: none;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+            }
+            
+            .hero {
+                height: 80vh;
+                padding: 0 1rem;
+            }
+            
+            .coffee-section {
+                padding: 3rem 1rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .modal-img {
+                height: 250px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-hero {
+                height: 50vh;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .cart-item-controls {
+                align-self: flex-end;
+            }
+
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .success-content {
+                padding: 2rem;
+            }
+
+            .success-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .coffee-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .addons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+            }
+            
+            .modal-title {
+                font-size: 1.8rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scroll-to-top {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .success-content {
+                padding: 1.5rem;
+            }
+
+            .success-title {
+                font-size: 1.6rem;
+            }
+
+            .success-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo" onclick="showPage('home')">Уютная <span>Чашка</span></a>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a onclick="showPage('home')">Главная</a></li>
+                    <li><a onclick="showPage('menu')">Меню</a></li>
+                    <li><a onclick="showPage('about')">О нас</a></li>
+                    <li class="cart-icon" onclick="showPage('cart')">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <!-- Главная страница -->
+        <section id="home" class="page active">
+            <!-- Герой-секция -->
+            <section class="hero">
+                <h1>Насладитесь идеальной чашкой кофе</h1>
+                <p>Погрузитесь в мир ароматов и вкусов в нашей уютной кофейне, где каждая чашка - это произведение искусства</p>
+                <a onclick="showPage('menu')" class="btn">Посмотреть меню</a>
+            </section>
+
+            <!-- Секция с популярными напитками -->
+            <section class="coffee-section" id="coffee">
+                <h2 class="section-title">Самые популярные напитки</h2>
+                <div class="coffee-grid" id="popularCoffeeGrid">
+                    <!-- Только 6 самых актуальных видов кофе -->
+                </div>
+            </section>
+
+            <!-- Секция с популярными десертами -->
+            <section class="coffee-section" id="desserts">
+                <h2 class="section-title">Популярные десерты</h2>
+                <div class="coffee-grid" id="popularDessertsGrid">
+                    <!-- 2 самых популярных десерта -->
+                </div>
+            </section>
+        </section>
+
+        <!-- Страница меню -->
+        <section id="menu" class="page">
+            <div class="coffee-section">
+                <h2 class="section-title">Полное меню</h2>
+                
+                <h3 class="menu-category-title">Напитки</h3>
+                <div class="coffee-grid" id="fullCoffeeGrid">
+                    <!-- Все виды кофе -->
+                </div>
+                
+                <h3 class="menu-category-title">Десерты</h3>
+                <div class="coffee-grid" id="dessertsGrid">
+                    <!-- Все десерты -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница "О нас" -->
+        <section id="about" class="page">
+            <div class="coffee-section">
+                <div class="about-hero">
+                    <h2 class="section-title">О нашей кофейне</h2>
+                    <p style="font-size: 1.2rem; max-width: 600px; color: var(--light-beige);">
+                        С 2015 года создаем уютные моменты для наших гостей
+                    </p>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-card">
+                        <h3>Наша философия</h3>
+                        <p>Мы верим, что идеальная чашка кофе - это не просто напиток, а целое искусство. 
+                           Каждый день мы отбираем лучшие зерна со всего мира и создаем неповторимую 
+                           атмосферу уюта и тепла.</p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <h3>Мастера своего дела</h3>
+                        <p>Наши бариста проходят специальное обучение у лучших кофейных экспертов. 
+                           Они постоянно совершенствуют свои навыки, чтобы каждая чашка кофе, 
+                           которую мы готовим, была идеальной.</p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <h3>Экологичность</h3>
+                        <p>Мы заботимся о природе: используем биоразлагаемые стаканчики, 
+                           перерабатываем отходы и поддерживаем фермеров, которые выращивают 
+                           кофе с соблюдением экологических стандартов.</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-text">Лет на рынке</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2М+</div>
+                        <div class="stat-text">Довольных клиентов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-text">Видов кофе</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-text">Натуральные продукты</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница корзины -->
+        <section id="cart" class="page">
+            <div class="coffee-section">
+                <h2 class="section-title">Корзина</h2>
+                <div class="cart-container" id="cartContainer">
+                    <!-- Товары в корзине будут добавляться сюда -->
+                </div>
+                <div class="cart-total" id="cartTotal">
+                    Итого: 0 ₽
+                </div>
+                <div class="nutrition-total" id="nutritionTotal">
+                    <!-- Общее БЖУ заказа -->
+                </div>
+                <button class="checkout-btn" onclick="startCheckout()">Оформить заказ</button>
+            </div>
+        </section>
+
+        <!-- Страница оформления заказа -->
+        <section id="checkout" class="page">
+            <div class="coffee-section">
+                <h2 class="section-title">Оформление заказа</h2>
+                
+                <div class="checkout-container">
+                    <!-- Форма заказа -->
+                    <div class="checkout-form">
+                        <h3 style="color: var(--beige); margin-bottom: 1.5rem;">Данные для доставки</h3>
+                        
+                        <div class="form-group">
+                            <label for="customerName">Имя *</label>
+                            <input type="text" id="customerName" required placeholder="Введите ваше имя">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customerPhone">Телефон *</label>
+                            <input type="tel" id="customerPhone" required placeholder="+7 (999) 999-99-99">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="deliveryAddress">Адрес доставки *</label>
+                            <input type="text" id="deliveryAddress" required placeholder="Улица, дом, квартира">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="deliveryTime">Время доставки *</label>
+                            <input type="time" id="deliveryTime" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="orderComment">Комментарий к заказу</label>
+                            <textarea id="orderComment" rows="4" placeholder="Дополнительные пожелания к заказу"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paymentMethod">Способ оплаты</label>
+                            <select id="paymentMethod">
+                                <option value="cash">Наличными при получении</option>
+                                <option value="card">Картой онлайн</option>
+                                <option value="card_courier">Картой курьеру</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-navigation">
+                            <button class="form-btn prev" onclick="showPage('cart')">Назад к корзине</button>
+                            <button class="form-btn" onclick="completeOrder()">Завершить заказ</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Сводка заказа -->
+                    <div class="order-summary">
+                        <h3>Ваш заказ</h3>
+                        <div class="order-items" id="orderSummaryItems">
+                            <!-- Товары из корзины -->
+                        </div>
+                        <div class="order-total" id="orderSummaryTotal">
+                            Итого: 0 ₽
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Кнопка возврата наверх -->
+    <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>О нас</h3>
+                <p>Мы создаем уютное пространство, где каждый может насладиться качественным кофе и приятной атмосферой.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>г. Уфа, ул. Ухтомского, 29</p>
+                <p>+7 (996) 256-09-63</p>
+                <p>+7 (927) 925-50-06</p>
+                <p>Kykymber431@gmail.com</p>
+                <p>hubgit910@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Часы работы</h3>
+                <p>Пн-Пт: 9:00 - 21:00</p>
+                <p>Сб-Вс: 10:00 - 21:00</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2015 Кофейня "Уютная Чашка". Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно с описанием товара -->
+    <div class="modal" id="coffeeModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImg" src="" alt="" class="modal-img">
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <p id="modalDescription" class="modal-description"></p>
+            <div class="modal-nutrition" id="modalNutrition">
+                <!-- БЖУ будет добавляться сюда -->
+            </div>
+            <p id="modalPrice" class="modal-price"></p>
+            
+            <!-- Секция допингов -->
+            <div class="addons-section">
+                <h3 class="addons-title">Дополнительные опции</h3>
+                <div class="addons-grid" id="addonsGrid">
+                    <!-- Допинги будут добавляться сюда -->
+                </div>
+            </div>
+
+            <button class="add-to-cart-btn" id="addToCartBtn">Добавить в корзину</button>
+        </div>
+    </div>
+
+    <!-- Плашка завершения заказа -->
+    <div class="order-success" id="orderSuccess">
+        <div class="success-content">
+            <div class="success-icon">✓</div>
+            <h2 class="success-title">Заказ успешно оформлен!</h2>
+            <p class="success-message">Спасибо за ваш заказ! Мы уже начали его готовить и скоро доставим.</p>
+            
+            <div class="success-details" id="successDetails">
+                <!-- Детали заказа будут добавляться сюда -->
+            </div>
+            
+            <button class="success-btn" onclick="closeSuccessModal()">Продолжить покупки</button>
+        </div>
+    </div>
+
+    <script>
+        // Полная база данных кофе с допингами и БЖУ
+        const coffeeData = {
+            1: {
+                name: "Эспрессо",
+                image: "img/espresso.jpg",
+                description: "Классический итальянский эспрессо - крепкий, насыщенный кофе с плотной пенкой. Идеальный выбор для настоящих ценителей кофе. Подается в маленькой чашке для максимального сохранения аромата.",
+                price: 290,
+                nutrition: { calories: 5, protein: 0.3, fat: 0.1, carbs: 1 },
+                addons: [
+                    { name: "Двойная порция", price: 120, nutrition: { calories: 5, protein: 0.3, fat: 0.1, carbs: 1 } },
+                    { name: "Сироп ванильный", price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+                    { name: "Сироп карамельный", price: 60, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11 } },
+                    { name: "Взбитые сливки", price: 80, nutrition: { calories: 50, protein: 0.5, fat: 5, carbs: 1 } },
+                    { name: "Корица", price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } },
+                    { name: "Мускатный орех", price: 40, nutrition: { calories: 12, protein: 0.1, fat: 0.8, carbs: 1 } }
+                ]
+            },
+            2: {
+                name: "Капучино",
+                image: "img/Capuchino.jpg",
+                description: "Идеальное сочетание эспрессо, молока и молочной пенки. Наш бариста создает нежную пенку, которая сохраняет температуру напитка и подчеркивает вкус кофе. Украшается рисунком на пенке.",
+                price: 350,
+                nutrition: { calories: 120, protein: 6, fat: 5, carbs: 10 },
+                addons: [
+                    { name: "Корица", price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } },
+                    { name: "Сироп кленовый", price: 60, nutrition: { calories: 52, protein: 0, fat: 0, carbs: 13 } },
+                    { name: "Шоколадная крошка", price: 50, nutrition: { calories: 70, protein: 1, fat: 4, carbs: 8 } },
+                    { name: "Экстра порция молока", price: 40, nutrition: { calories: 60, protein: 3, fat: 3, carbs: 5 } },
+                    { name: "Карамельный соус", price: 50, nutrition: { calories: 80, protein: 0.5, fat: 2, carbs: 15 } },
+                    { name: "Тертый шоколад", price: 45, nutrition: { calories: 65, protein: 1, fat: 4, carbs: 7 } }
+                ]
+            },
+            3: {
+                name: "Латте",
+                image: "img/latte.jpg",
+                description: "Нежный кофейный напиток на основе эспрессо с большим количеством вспененного молока. Имеет мягкий вкус и кремовую текстуру. Идеален для тех, кто предпочитает менее крепкий кофе.",
+                price: 380,
+                nutrition: { calories: 180, protein: 9, fat: 7, carbs: 15 },
+                addons: [
+                    { name: "Сироп миндальный", price: 60, nutrition: { calories: 35, protein: 0, fat: 0, carbs: 9 } },
+                    { name: "Кокосовое молоко", price: 80, nutrition: { calories: 45, protein: 0.5, fat: 4, carbs: 2 } },
+                    { name: "Мускатный орех", price: 40, nutrition: { calories: 12, protein: 0.1, fat: 0.8, carbs: 1 } },
+                    { name: "Карамельная крошка", price: 50, nutrition: { calories: 60, protein: 0.5, fat: 2, carbs: 10 } },
+                    { name: "Ванильный сироп", price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+                    { name: "Фундучный сироп", price: 60, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11 } }
+                ]
+            },
+            4: {
+                name: "Американо",
+                image: "img/Amerikano.jpg",
+                description: "Эспрессо, разбавленный горячей водой. Сохраняет насыщенный вкус и аромат кофе, но имеет меньшую крепость. Отличный выбор для длительного наслаждения кофе.",
+                price: 310,
+                nutrition: { calories: 10, protein: 0.5, fat: 0.2, carbs: 2 },
+                addons: [
+                    { name: "Лимон", price: 30, nutrition: { calories: 4, protein: 0.1, fat: 0, carbs: 1 } },
+                    { name: "Сироп апельсиновый", price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+                    { name: "Мед", price: 40, nutrition: { calories: 64, protein: 0.1, fat: 0, carbs: 17 } },
+                    { name: "Имбирь", price: 35, nutrition: { calories: 5, protein: 0.1, fat: 0.1, carbs: 1 } },
+                    { name: "Корица", price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } },
+                    { name: "Гвоздика", price: 35, nutrition: { calories: 6, protein: 0.1, fat: 0.3, carbs: 1 } }
+                ]
+            },
+            5: {
+                name: "Моккачино",
+                image: "img/Moccachino.jpg",
+                description: "Восхитительное сочетание эспрессо, шоколада и молока. Наш моккачино готовится с использованием качественного какао и украшается взбитыми сливками. Настоящее удовольствие для сладкоежек.",
+                price: 420,
+                nutrition: { calories: 250, protein: 8, fat: 10, carbs: 30 },
+                addons: [
+                    { name: "Белый шоколад", price: 80, nutrition: { calories: 150, protein: 2, fat: 9, carbs: 16 } },
+                    { name: "Мятный сироп", price: 60, nutrition: { calories: 35, protein: 0, fat: 0, carbs: 9 } },
+                    { name: "Маршмеллоу", price: 50, nutrition: { calories: 90, protein: 1, fat: 0, carbs: 23 } },
+                    { name: "Шоколадная стружка", price: 45, nutrition: { calories: 70, protein: 1, fat: 4, carbs: 8 } },
+                    { name: "Карамельный соус", price: 50, nutrition: { calories: 80, protein: 0.5, fat: 2, carbs: 15 } },
+                    { name: "Тертый арахис", price: 55, nutrition: { calories: 90, protein: 4, fat: 8, carbs: 3 } }
+                ]
+            },
+            6: {
+                name: "Раф кофе",
+                image: "img/Raf.jpg",
+                description: "Популярный российский кофейный напиток, приготовленный на основе эспрессо, сливок и ванильного сахара. Взбивается в питчере до образования нежной пенки. Имеет мягкий сливочный вкус.",
+                price: 450,
+                nutrition: { calories: 280, protein: 5, fat: 15, carbs: 25 },
+                addons: [
+                    { name: "Кокосовые сливки", price: 90, nutrition: { calories: 100, protein: 1, fat: 10, carbs: 3 } },
+                    { name: "Сироп фундука", price: 60, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11 } },
+                    { name: "Коричневый сахар", price: 30, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 12 } },
+                    { name: "Ванильный экстракт", price: 50, nutrition: { calories: 10, protein: 0, fat: 0, carbs: 1 } },
+                    { name: "Мед", price: 40, nutrition: { calories: 64, protein: 0.1, fat: 0, carbs: 17 } },
+                    { name: "Кленовый сироп", price: 60, nutrition: { calories: 52, protein: 0, fat: 0, carbs: 13 } }
+                ]
+            },
+            7: {
+                name: "Флэт Уайт",
+                image: "img/Flat_White.jpg",
+                description: "Австралийский кофейный напиток с двойной порцией эспрессо и тонким слоем микрофомы. Более крепкий, чем латте, с насыщенным кофейным вкусом.",
+                price: 390,
+                nutrition: { calories: 140, protein: 8, fat: 6, carbs: 12 },
+                addons: [
+                    { name: "Дополнительная порция эспрессо", price: 120, nutrition: { calories: 5, protein: 0.3, fat: 0.1, carbs: 1 } },
+                    { name: "Сироп ирландский крем", price: 70, nutrition: { calories: 60, protein: 0, fat: 0, carbs: 15 } },
+                    { name: "Цедра апельсина", price: 35, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } },
+                    { name: "Корица", price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } },
+                    { name: "Ванильный сахар", price: 25, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } }
+                ]
+            },
+            8: {
+                name: "Айс Латте",
+                image: "img/iced_latte.jpg",
+                description: "Освежающий холодный кофейный напиток на основе эспрессо и охлажденного молока. Подается со льдом, идеален в жаркую погоду.",
+                price: 370,
+                nutrition: { calories: 150, protein: 7, fat: 6, carbs: 14 },
+                addons: [
+                    { name: "Карамельный сироп", price: 60, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11 } },
+                    { name: "Мятный сироп", price: 60, nutrition: { calories: 35, protein: 0, fat: 0, carbs: 9 } },
+                    { name: "Ванильное мороженое", price: 100, nutrition: { calories: 140, protein: 2, fat: 7, carbs: 17 } },
+                    { name: "Шоколадный соус", price: 50, nutrition: { calories: 80, protein: 0.5, fat: 2, carbs: 15 } },
+                    { name: "Кокосовое молоко", price: 80, nutrition: { calories: 45, protein: 0.5, fat: 4, carbs: 2 } }
+                ]
+            },
+            9: {
+                name: "Макиато",
+                image: "img/Macchiato.jpg",
+                description: "Эспрессо с небольшим количеством молочной пенки. Сохраняет крепость эспрессо, но с более мягким вкусом благодаря пенке.",
+                price: 320,
+                nutrition: { calories: 25, protein: 1.5, fat: 1, carbs: 3 },
+                addons: [
+                    { name: "Карамельная пенка", price: 70, nutrition: { calories: 60, protein: 0.5, fat: 3, carbs: 8 } },
+                    { name: "Шоколадная стружка", price: 45, nutrition: { calories: 70, protein: 1, fat: 4, carbs: 8 } },
+                    { name: "Корица", price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } },
+                    { name: "Ванильный сироп", price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } }
+                ]
+            },
+            10: {
+                name: "Кофе по-турецки",
+                image: "img/Tyrish.jpg",
+                description: "Традиционный турецкий кофе, приготовленный в джезве. Имеет насыщенный вкус и аромат, подается с осадком.",
+                price: 280,
+                nutrition: { calories: 15, protein: 0.8, fat: 0.5, carbs: 3 },
+                addons: [
+                    { name: "Кардамон", price: 40, nutrition: { calories: 8, protein: 0.3, fat: 0.2, carbs: 2 } },
+                    { name: "Гвоздика", price: 35, nutrition: { calories: 6, protein: 0.1, fat: 0.3, carbs: 1 } },
+                    { name: "Мед", price: 40, nutrition: { calories: 64, protein: 0.1, fat: 0, carbs: 17 } },
+                    { name: "Роза", price: 50, nutrition: { calories: 5, protein: 0.1, fat: 0, carbs: 1 } },
+                    { name: "Фисташки", price: 60, nutrition: { calories: 80, protein: 3, fat: 7, carbs: 4 } }
+                ]
+            },
+            11: {
+                name: "Бамб",
+                image: "img/bambl.jpg",
+                description: "Освежающий кофе с цитрусовыми нотами. Идеальное сочетание для утреннего пробуждения.",
+                price: 340,
+                nutrition: { calories: 90, protein: 2, fat: 1, carbs: 18 },
+                addons: [
+                    { name: "Долька апельсина", price: 30, nutrition: { calories: 15, protein: 0.3, fat: 0, carbs: 4 } },
+                    { name: "Коричневый сахар", price: 30, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 12 } },
+                    { name: "Мед", price: 40, nutrition: { calories: 64, protein: 0.1, fat: 0, carbs: 17 } },
+                    { name: "Корица", price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } }
+                ]
+            },
+            12: {
+                name: "Ирландский кофе",
+                image: "img/irland.jpg",
+                description: "Ароматный кофе с ирландским виски и взбитыми сливками. Согревающий напиток для холодных вечеров.",
+                price: 520,
+                nutrition: { calories: 210, protein: 2, fat: 8, carbs: 12 },
+                addons: [
+                    { name: "Дополнительная порция виски", price: 150, nutrition: { calories: 70, protein: 0, fat: 0, carbs: 0 } },
+                    { name: "Шоколадная стружка", price: 45, nutrition: { calories: 70, protein: 1, fat: 4, carbs: 8 } },
+                    { name: "Карамельный соус", price: 50, nutrition: { calories: 80, protein: 0.5, fat: 2, carbs: 15 } }
+                ]
+            },
+            13: {
+                name: "Матча Латте",
+                image: "img/matcha_latte.jpg",
+                description: "Традиционный японский напиток из порошка матча и молока. Обладает нежным вкусом и полезными свойствами.",
+                price: 420,
+                nutrition: { calories: 130, protein: 7, fat: 4, carbs: 16 },
+                addons: [
+                    { name: "Кокосовое молоко", price: 80, nutrition: { calories: 45, protein: 0.5, fat: 4, carbs: 2 } },
+                    { name: "Мед", price: 40, nutrition: { calories: 64, protein: 0.1, fat: 0, carbs: 17 } },
+                    { name: "Ванильный сироп", price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } }
+                ]
+            },
+            14: {
+                name: "Карамельный макиато",
+                image: "img/caramel.jpg",
+                description: "Многослойный кофейный напиток с ванильным сиропом, молоком, эспрессо и карамельным соусом.",
+                price: 450,
+                nutrition: { calories: 220, protein: 7, fat: 6, carbs: 32 },
+                addons: [
+                    { name: "Дополнительная порция карамели", price: 50, nutrition: { calories: 80, protein: 0.5, fat: 2, carbs: 15 } },
+                    { name: "Взбитые сливки", price: 80, nutrition: { calories: 50, protein: 0.5, fat: 5, carbs: 1 } },
+                    { name: "Корица", price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } }
+                ]
+            },
+            15: {
+                name: "Холодный раф",
+                image: "img/ice_raf.jpg",
+                description: "Освежающая версия классического рафа с охлажденными сливками. Идеален для жаркой погоды.",
+                price: 470,
+                nutrition: { calories: 290, protein: 5, fat: 16, carbs: 26 },
+                addons: [
+                    { name: "Кокосовые сливки", price: 90, nutrition: { calories: 100, protein: 1, fat: 10, carbs: 3 } },
+                    { name: "Сироп фундука", price: 60, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11 } },
+                    { name: "Шоколадная стружка", price: 45, nutrition: { calories: 70, protein: 1, fat: 4, carbs: 8 } }
+                ]
+            }
+        };
+
+        // База данных десертов с БЖУ
+        const dessertsData = {
+            1: {
+                name: "Тирамису",
+                image: "img/Tiramisu.jpg",
+                description: "Классический итальянский десерт из печенья савоярди, пропитанного эспрессо, с нежным кремом маскарпоне и какао.",
+                price: 450,
+                nutrition: { calories: 450, protein: 8, fat: 25, carbs: 45 }
+            },
+            2: {
+                name: "Чизкейк Нью-Йорк",
+                image: "img/Cake_NY.jpg",
+                description: "Нежный сливочный чизкейк с песочной основой. Подается с ягодным соусом на выбор.",
+                price: 380,
+                nutrition: { calories: 520, protein: 10, fat: 32, carbs: 48 }
+            },
+            3: {
+                name: "Круассан с шоколадом",
+                image: "img/Cryasan.jpg",
+                description: "Свежий слоеный круассан с начинкой из бельгийского шоколада. Идеально сочетается с кофе.",
+                price: 220,
+                nutrition: { calories: 280, protein: 5, fat: 14, carbs: 32 }
+            },
+            4: {
+                name: "Макаруны",
+                image: "img/macaron.jpg",
+                description: "Набор из 4-х нежных французских пирожных с различными вкусами: ваниль, шоколад, малина, фисташка.",
+                price: 320,
+                nutrition: { calories: 380, protein: 6, fat: 18, carbs: 48 }
+            },
+            5: {
+                name: "Брауни",
+                image: "img/brayni.jpg",
+                description: "Шоколадный брауни с орехами пекан, подается теплым с шариком ванильного мороженого.",
+                price: 350,
+                nutrition: { calories: 420, protein: 6, fat: 22, carbs: 50 }
+            },
+            6: {
+                name: "Медовик",
+                image: "img/medovik.jpg",
+                description: "Традиционный русский торт из медовых коржей со сметанным кремом.",
+                price: 280,
+                nutrition: { calories: 380, protein: 5, fat: 16, carbs: 52 }
+            },
+            7: {
+                name: "Эклер с заварным кремом",
+                image: "img/ekler.jpg",
+                description: "Нежное заварное тесто с ванильным кремом и глазурью.",
+                price: 190,
+                nutrition: { calories: 240, protein: 4, fat: 12, carbs: 28 }
+            },
+            8: {
+                name: "Панна котта с ягодным соусом",
+                image: "img/pana.jpg",
+                description: "Нежный итальянский десерт из сливок и ванили с ягодным соусом.",
+                price: 320,
+                nutrition: { calories: 280, protein: 4, fat: 20, carbs: 22 }
+            },
+            9: {
+                name: "Морковный торт",
+                image: "img/carrot.jpg",
+                description: "Влажный пряный торт с морковью, орехами и сливочным сыром.",
+                price: 290,
+                nutrition: { calories: 350, protein: 5, fat: 18, carbs: 42 }
+            },
+            10: {
+                name: "Шоколадный фондан",
+                image: "img/fondan.jpeg",
+                description: "Шоколадный кекс с жидкой шоколадной сердцевиной. Подается с ванильным мороженым.",
+                price: 380,
+                nutrition: { calories: 480, protein: 7, fat: 28, carbs: 52 }
+            }
+        };
+
+        // Переменные для состояния приложения
+        let cart = [];
+        let currentCoffee = null;
+        let selectedAddons = [];
+        let isViewMode = false; // Флаг для режима просмотра из корзины
+        let currentStep = 1; // Текущий шаг оформления заказа
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            setupEventListeners();
+            setupScrollToTop();
+        });
+
+        // Инициализация приложения
+        function initializeApp() {
+            renderPopularCoffee();
+            renderPopularDesserts();
+            renderFullCoffeeMenu();
+            renderDesserts();
+            updateCartCount();
+        }
+
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Закрытие модального окна
+            document.querySelector('.close-modal').addEventListener('click', closeModal);
+            document.getElementById('coffeeModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // Мобильное меню
+            document.getElementById('menuToggle').addEventListener('click', toggleMobileMenu);
+
+            // Добавление в корзину
+            document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+        }
+
+        // Настройка кнопки возврата наверх
+        function setupScrollToTop() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+        }
+
+        // Прокрутка наверх страницы
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Показать/скрыть мобильное меню
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Показать страницу
+        function showPage(pageId) {
+            // Скрыть все страницы
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Показать выбранную страницу
+            document.getElementById(pageId).classList.add('active');
+            
+            // Закрыть мобильное меню если открыто
+            document.getElementById('navMenu').classList.remove('active');
+            
+            // Обновить корзину если открыта страница корзины
+            if (pageId === 'cart') {
+                renderCart();
+            }
+            
+            // Обновить сводку заказа если открыта страница оформления
+            if (pageId === 'checkout') {
+                renderOrderSummary();
+            }
+            
+            // Прокрутить наверх страницы
+            scrollToTop();
+        }
+
+        // Рендер популярных видов кофе (6 штук)
+        function renderPopularCoffee() {
+            const grid = document.getElementById('popularCoffeeGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(coffeeData).slice(0, 6).forEach(id => {
+                const coffee = coffeeData[id];
+                grid.appendChild(createCoffeeCard(coffee, id));
+            });
+        }
+
+        // Рендер популярных десертов (2 штуки)
+        function renderPopularDesserts() {
+            const grid = document.getElementById('popularDessertsGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(dessertsData).slice(0, 2).forEach(id => {
+                const dessert = dessertsData[id];
+                const card = document.createElement('div');
+                card.className = 'coffee-card';
+                card.innerHTML = `
+                    <img src="${dessert.image}" alt="${dessert.name}" class="coffee-img" onerror="this.style.backgroundColor='var(--brown)'; this.alt='Изображение временно недоступно'">
+                    <div class="coffee-info">
+                        <h3 class="coffee-name">${dessert.name}</h3>
+                        <p class="coffee-price">${dessert.price} ₽</p>
+                        <div class="nutrition-info">
+                            <span>${dessert.nutrition.calories} ккал</span>
+                            <span>Б: ${dessert.nutrition.protein}г</span>
+                            <span>Ж: ${dessert.nutrition.fat}г</span>
+                            <span>У: ${dessert.nutrition.carbs}г</span>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => openDessertModal(dessert, id));
+                grid.appendChild(card);
+            });
+        }
+
+        // Рендер полного меню кофе
+        function renderFullCoffeeMenu() {
+            const grid = document.getElementById('fullCoffeeGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(coffeeData).forEach(id => {
+                const coffee = coffeeData[id];
+                grid.appendChild(createCoffeeCard(coffee, id));
+            });
+        }
+
+        // Рендер десертов
+        function renderDesserts() {
+            const grid = document.getElementById('dessertsGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(dessertsData).forEach(id => {
+                const dessert = dessertsData[id];
+                const card = document.createElement('div');
+                card.className = 'coffee-card';
+                card.innerHTML = `
+                    <img src="${dessert.image}" alt="${dessert.name}" class="coffee-img" onerror="this.style.backgroundColor='var(--brown)'; this.alt='Изображение временно недоступно'">
+                    <div class="coffee-info">
+                        <h3 class="coffee-name">${dessert.name}</h3>
+                        <p class="coffee-price">${dessert.price} ₽</p>
+                        <div class="nutrition-info">
+                            <span>${dessert.nutrition.calories} ккал</span>
+                            <span>Б: ${dessert.nutrition.protein}г</span>
+                            <span>Ж: ${dessert.nutrition.fat}г</span>
+                            <span>У: ${dessert.nutrition.carbs}г</span>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => openDessertModal(dessert, id));
+                grid.appendChild(card);
+            });
+        }
+
+        // Создание карточки кофе
+        function createCoffeeCard(coffee, id) {
+            const card = document.createElement('div');
+            card.className = 'coffee-card';
+            card.innerHTML = `
+                <img src="${coffee.image}" alt="${coffee.name}" class="coffee-img" onerror="this.style.backgroundColor='var(--brown)'; this.alt='Изображение временно недоступно'">
+                <div class="coffee-info">
+                    <h3 class="coffee-name">${coffee.name}</h3>
+                    <p class="coffee-price">${coffee.price} ₽</p>
+                    <div class="nutrition-info">
+                        <span>${coffee.nutrition.calories} ккал</span>
+                        <span>Б: ${coffee.nutrition.protein}г</span>
+                        <span>Ж: ${coffee.nutrition.fat}г</span>
+                        <span>У: ${coffee.nutrition.carbs}г</span>
+                    </div>
+                </div>
+            `;
+            card.addEventListener('click', () => openCoffeeModal(coffee, id));
+            return card;
+        }
+
+        // Открыть модальное окно кофе
+        function openCoffeeModal(coffee, id) {
+            currentCoffee = { ...coffee, id, type: 'coffee' };
+            selectedAddons = [];
+            isViewMode = false;
+            
+            document.getElementById('modalImg').src = coffee.image;
+            document.getElementById('modalImg').onerror = function() {
+                this.style.backgroundColor = 'var(--brown)';
+                this.alt = 'Изображение временно недоступно';
+            };
+            document.getElementById('modalTitle').textContent = coffee.name;
+            document.getElementById('modalDescription').textContent = coffee.description;
+            document.getElementById('modalPrice').textContent = `${coffee.price} ₽`;
+            
+            // Показываем БЖУ
+            renderNutritionInfo(coffee.nutrition);
+            
+            // Показываем кнопку добавления в корзину
+            document.getElementById('addToCartBtn').style.display = 'block';
+            document.getElementById('addToCartBtn').textContent = 'Добавить в корзину';
+            document.getElementById('addToCartBtn').onclick = addToCart;
+            
+            renderAddons(coffee.addons);
+            document.getElementById('coffeeModal').style.display = 'flex';
+        }
+
+        // Открыть модальное окно десерта
+        function openDessertModal(dessert, id) {
+            currentCoffee = { ...dessert, id, type: 'dessert' };
+            isViewMode = false;
+            
+            document.getElementById('modalImg').src = dessert.image;
+            document.getElementById('modalImg').onerror = function() {
+                this.style.backgroundColor = 'var(--brown)';
+                this.alt = 'Изображение временно недоступно';
+            };
+            document.getElementById('modalTitle').textContent = dessert.name;
+            document.getElementById('modalDescription').textContent = dessert.description;
+            document.getElementById('modalPrice').textContent = `${dessert.price} ₽`;
+            
+            // Показываем БЖУ
+            renderNutritionInfo(dessert.nutrition);
+            
+            // Показываем кнопку добавления в корзину
+            document.getElementById('addToCartBtn').style.display = 'block';
+            document.getElementById('addToCartBtn').textContent = 'Добавить в корзину';
+            document.getElementById('addToCartBtn').onclick = addToCart;
+            
+            // Скрыть секцию с допингами для десертов
+            document.querySelector('.addons-section').style.display = 'none';
+            document.getElementById('coffeeModal').style.display = 'flex';
+        }
+
+        // Рендер информации о БЖУ
+        function renderNutritionInfo(nutrition) {
+            const nutritionContainer = document.getElementById('modalNutrition');
+            nutritionContainer.innerHTML = `
+                <div class="nutrition-item">
+                    <div class="nutrition-value">${nutrition.calories}</div>
+                    <div class="nutrition-label">ккал</div>
+                </div>
+                <div class="nutrition-item">
+                    <div class="nutrition-value">${nutrition.protein}</div>
+                    <div class="nutrition-label">Белки (г)</div>
+                </div>
+                <div class="nutrition-item">
+                    <div class="nutrition-value">${nutrition.fat}</div>
+                    <div class="nutrition-label">Жиры (г)</div>
+                </div>
+                <div class="nutrition-item">
+                    <div class="nutrition-value">${nutrition.carbs}</div>
+                    <div class="nutrition-label">Углеводы (г)</div>
+                </div>
+            `;
+        }
+
+        // Рендер допингов
+        function renderAddons(addons) {
+            const grid = document.getElementById('addonsGrid');
+            grid.innerHTML = '';
+            
+            addons.forEach((addon, index) => {
+                const addonElement = document.createElement('div');
+                addonElement.className = 'addon-item';
+                addonElement.innerHTML = `
+                    <div class="addon-name">${addon.name}</div>
+                    <div class="addon-price">+${addon.price} ₽</div>
+                    <div class="addon-nutrition">
+                        <span>${addon.nutrition.calories} ккал</span>
+                        <span>Б: ${addon.nutrition.protein}г</span>
+                        <span>Ж: ${addon.nutrition.fat}г</span>
+                        <span>У: ${addon.nutrition.carbs}г</span>
+                    </div>
+                `;
+                
+                if (!isViewMode) {
+                    // В обычном режиме - можно выбирать допинги
+                    addonElement.addEventListener('click', () => toggleAddon(addonElement, addon, index));
+                } else {
+                    // В режиме просмотра - нельзя выбирать
+                    addonElement.style.cursor = 'default';
+                }
+                
+                grid.appendChild(addonElement);
+            });
+            
+            // Показать секцию с допингами
+            document.querySelector('.addons-section').style.display = 'block';
+        }
+
+        // Переключить выбор допинга
+        function toggleAddon(element, addon, index) {
+            if (isViewMode) return; // В режиме просмотра нельзя менять допинги
+            
+            element.classList.toggle('selected');
+            
+            if (element.classList.contains('selected')) {
+                selectedAddons.push(addon);
+            } else {
+                selectedAddons = selectedAddons.filter(a => a !== addon);
+            }
+            
+            updateModalPrice();
+            updateModalNutrition();
+        }
+
+        // Обновить цену в модальном окне
+        function updateModalPrice() {
+            let totalPrice = currentCoffee.price;
+            selectedAddons.forEach(addon => {
+                totalPrice += addon.price;
+            });
+            document.getElementById('modalPrice').textContent = `${totalPrice} ₽`;
+        }
+
+        // Обновить БЖУ в модальном окне
+        function updateModalNutrition() {
+            let totalNutrition = {
+                calories: currentCoffee.nutrition.calories,
+                protein: currentCoffee.nutrition.protein,
+                fat: currentCoffee.nutrition.fat,
+                carbs: currentCoffee.nutrition.carbs
+            };
+            
+            selectedAddons.forEach(addon => {
+                totalNutrition.calories += addon.nutrition.calories;
+                totalNutrition.protein += addon.nutrition.protein;
+                totalNutrition.fat += addon.nutrition.fat;
+                totalNutrition.carbs += addon.nutrition.carbs;
+            });
+            
+            renderNutritionInfo(totalNutrition);
+        }
+
+        // Закрыть модальное окно
+        function closeModal() {
+            document.getElementById('coffeeModal').style.display = 'none';
+            selectedAddons = [];
+            currentCoffee = null;
+            isViewMode = false;
+            
+            // Восстанавливаем кнопку добавления в корзину
+            document.getElementById('addToCartBtn').style.display = 'block';
+            document.getElementById('addToCartBtn').textContent = 'Добавить в корзину';
+            document.getElementById('addToCartBtn').onclick = addToCart;
+        }
+
+        // Добавить в корзину
+        function addToCart() {
+            if (!currentCoffee) return;
+            
+            let totalPrice = currentCoffee.price;
+            let totalNutrition = {
+                calories: currentCoffee.nutrition.calories,
+                protein: currentCoffee.nutrition.protein,
+                fat: currentCoffee.nutrition.fat,
+                carbs: currentCoffee.nutrition.carbs
+            };
+            
+            selectedAddons.forEach(addon => {
+                totalPrice += addon.price;
+                totalNutrition.calories += addon.nutrition.calories;
+                totalNutrition.protein += addon.nutrition.protein;
+                totalNutrition.fat += addon.nutrition.fat;
+                totalNutrition.carbs += addon.nutrition.carbs;
+            });
+            
+            const cartItem = {
+                id: Date.now(),
+                product: currentCoffee,
+                addons: [...selectedAddons],
+                quantity: 1,
+                totalPrice: totalPrice,
+                totalNutrition: totalNutrition
+            };
+            
+            cart.push(cartItem);
+            updateCartCount();
+            closeModal();
+            
+            // Показать уведомление
+            showNotification(`${currentCoffee.name} добавлен в корзину!`);
+        }
+
+        // Показать уведомление
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background-color: var(--brown);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Обновить счетчик корзины
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Рендер корзины
+        function renderCart() {
+            const container = document.getElementById('cartContainer');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="empty-cart">Корзина пуста</div>';
+                document.getElementById('cartTotal').textContent = 'Итого: 0 ₽';
+                document.getElementById('nutritionTotal').innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = '';
+            let total = 0;
+            let totalNutrition = { calories: 0, protein: 0, fat: 0, carbs: 0 };
+            
+            cart.forEach(item => {
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                
+                const addonsText = item.addons.length > 0 
+                    ? `Допы: ${item.addons.map(a => a.name).join(', ')}`
+                    : '';
+                
+                cartItemElement.innerHTML = `
+                    <div class="cart-item-info">
+                        <div class="cart-item-name" onclick="openCartItemModal(${item.id})">${item.product.name}</div>
+                        <div class="cart-item-addons">${addonsText}</div>
+                        <div class="cart-item-price">${item.totalPrice} ₽</div>
+                        <div class="nutrition-info">
+                            <span>${item.totalNutrition.calories} ккал</span>
+                            <span>Б: ${item.totalNutrition.protein}г</span>
+                            <span>Ж: ${item.totalNutrition.fat}г</span>
+                            <span>У: ${item.totalNutrition.carbs}г</span>
+                        </div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+                        <button class="quantity-btn" onclick="removeFromCart(${item.id})" style="background-color: #d32f2f; margin-left: 1rem;">×</button>
+                    </div>
+                `;
+                
+                container.appendChild(cartItemElement);
+                total += item.totalPrice * item.quantity;
+                totalNutrition.calories += item.totalNutrition.calories * item.quantity;
+                totalNutrition.protein += item.totalNutrition.protein * item.quantity;
+                totalNutrition.fat += item.totalNutrition.fat * item.quantity;
+                totalNutrition.carbs += item.totalNutrition.carbs * item.quantity;
+            });
+            
+            document.getElementById('cartTotal').textContent = `Итого: ${total} ₽`;
+            
+            // Общее БЖУ заказа
+            document.getElementById('nutritionTotal').innerHTML = `
+                <div class="modal-nutrition">
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">${Math.round(totalNutrition.calories)}</div>
+                        <div class="nutrition-label">ккал</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">${Math.round(totalNutrition.protein)}</div>
+                        <div class="nutrition-label">Белки (г)</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">${Math.round(totalNutrition.fat)}</div>
+                        <div class="nutrition-label">Жиры (г)</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">${Math.round(totalNutrition.carbs)}</div>
+                        <div class="nutrition-label">Углеводы (г)</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Рендер сводки заказа
+        function renderOrderSummary() {
+            const container = document.getElementById('orderSummaryItems');
+            let total = 0;
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p>Корзина пуста</p>';
+                document.getElementById('orderSummaryTotal').textContent = 'Итого: 0 ₽';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            cart.forEach(item => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                
+                const addonsText = item.addons.length > 0 
+                    ? ` (${item.addons.map(a => a.name).join(', ')})`
+                    : '';
+                
+                orderItem.innerHTML = `
+                    <div>${item.product.name}${addonsText} × ${item.quantity}</div>
+                    <div>${item.totalPrice * item.quantity} ₽</div>
+                `;
+                
+                container.appendChild(orderItem);
+                total += item.totalPrice * item.quantity;
+            });
+            
+            document.getElementById('orderSummaryTotal').textContent = `Итого: ${total} ₽`;
+        }
+
+        // Открыть модальное окно товара из корзины
+        function openCartItemModal(itemId) {
+            const item = cart.find(i => i.id === itemId);
+            if (!item) return;
+            
+            const product = item.product;
+            currentCoffee = { ...product, id: item.id };
+            selectedAddons = [...item.addons];
+            isViewMode = true; // Включаем режим просмотра
+            
+            document.getElementById('modalImg').src = product.image;
+            document.getElementById('modalImg').onerror = function() {
+                this.style.backgroundColor = 'var(--brown)';
+                this.alt = 'Изображение временно недоступно';
+            };
+            document.getElementById('modalTitle').textContent = product.name;
+            document.getElementById('modalDescription').textContent = product.description;
+            
+            // Показываем полную стоимость с допингами
+            let totalPrice = product.price;
+            let totalNutrition = {
+                calories: product.nutrition.calories,
+                protein: product.nutrition.protein,
+                fat: product.nutrition.fat,
+                carbs: product.nutrition.carbs
+            };
+            
+            selectedAddons.forEach(addon => {
+                totalPrice += addon.price;
+                totalNutrition.calories += addon.nutrition.calories;
+                totalNutrition.protein += addon.nutrition.protein;
+                totalNutrition.fat += addon.nutrition.fat;
+                totalNutrition.carbs += addon.nutrition.carbs;
+            });
+            
+            document.getElementById('modalPrice').textContent = `${totalPrice} ₽`;
+            renderNutritionInfo(totalNutrition);
+            
+            // Для кофе показываем допинги, для десертов скрываем
+            if (product.type === 'coffee') {
+                renderAddonsForCartItem(product.addons, item.addons);
+                document.querySelector('.addons-section').style.display = 'block';
+            } else {
+                document.querySelector('.addons-section').style.display = 'none';
+            }
+            
+            // Скрываем кнопку добавления в корзину и показываем кнопку редактирования
+            document.getElementById('addToCartBtn').style.display = 'block';
+            document.getElementById('addToCartBtn').textContent = 'Изменить товар';
+            document.getElementById('addToCartBtn').onclick = function() {
+                editCartItem(itemId);
+            };
+            
+            document.getElementById('coffeeModal').style.display = 'flex';
+        }
+
+        // Рендер допингов для товара из корзины
+        function renderAddonsForCartItem(addons, selectedAddons) {
+            const grid = document.getElementById('addonsGrid');
+            grid.innerHTML = '';
+            
+            addons.forEach((addon, index) => {
+                const isSelected = selectedAddons.some(a => a.name === addon.name);
+                const addonElement = document.createElement('div');
+                addonElement.className = `addon-item ${isSelected ? 'selected' : ''}`;
+                addonElement.innerHTML = `
+                    <div class="addon-name">${addon.name}</div>
+                    <div class="addon-price">+${addon.price} ₽</div>
+                    <div class="addon-nutrition">
+                        <span>${addon.nutrition.calories} ккал</span>
+                        <span>Б: ${addon.nutrition.protein}г</span>
+                        <span>Ж: ${addon.nutrition.fat}г</span>
+                        <span>У: ${addon.nutrition.carbs}г</span>
+                    </div>
+                `;
+                // Отключаем возможность выбора допингов в режиме просмотра
+                addonElement.style.cursor = 'default';
+                grid.appendChild(addonElement);
+            });
+        }
+
+        // Редактировать товар в корзине
+        function editCartItem(itemId) {
+            const itemIndex = cart.findIndex(i => i.id === itemId);
+            if (itemIndex === -1) return;
+            
+            // Удаляем старый товар
+            cart.splice(itemIndex, 1);
+            
+            // Добавляем новый с текущими настройками
+            let totalPrice = currentCoffee.price;
+            let totalNutrition = {
+                calories: currentCoffee.nutrition.calories,
+                protein: currentCoffee.nutrition.protein,
+                fat: currentCoffee.nutrition.fat,
+                carbs: currentCoffee.nutrition.carbs
+            };
+            
+            selectedAddons.forEach(addon => {
+                totalPrice += addon.price;
+                totalNutrition.calories += addon.nutrition.calories;
+                totalNutrition.protein += addon.nutrition.protein;
+                totalNutrition.fat += addon.nutrition.fat;
+                totalNutrition.carbs += addon.nutrition.carbs;
+            });
+            
+            const cartItem = {
+                id: Date.now(),
+                product: currentCoffee,
+                addons: [...selectedAddons],
+                quantity: 1,
+                totalPrice: totalPrice,
+                totalNutrition: totalNutrition
+            };
+            
+            cart.push(cartItem);
+            updateCartCount();
+            renderCart();
+            closeModal();
+            
+            showNotification(`${currentCoffee.name} изменен в корзине!`);
+        }
+
+        // Изменить количество товара
+        function changeQuantity(itemId, change) {
+            const item = cart.find(i => i.id === itemId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(itemId);
+                } else {
+                    updateCartCount();
+                    renderCart();
+                }
+            }
+        }
+
+        // Удалить из корзины
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartCount();
+            renderCart();
+        }
+
+        // Начать оформление заказа
+        function startCheckout() {
+            if (cart.length === 0) {
+                alert('Корзина пуста!');
+                return;
+            }
+            
+            showPage('checkout');
+            renderOrderSummary();
+        }
+
+        // Завершить заказ
+        function completeOrder() {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('deliveryAddress').value;
+            const time = document.getElementById('deliveryTime').value;
+            const comment = document.getElementById('orderComment').value;
+            const payment = document.getElementById('paymentMethod').value;
+            
+            if (!name || !phone || !address || !time) {
+                alert('Пожалуйста, заполните все обязательные поля');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
+            
+            // Показываем плашку завершения заказа
+            showSuccessModal(name, phone, address, time, comment, payment, total);
+        }
+
+        // Показать плашку завершения заказа
+        function showSuccessModal(name, phone, address, time, comment, payment, total) {
+            const detailsContainer = document.getElementById('successDetails');
+            
+            let paymentText = '';
+            switch(payment) {
+                case 'cash':
+                    paymentText = 'Наличными при получении';
+                    break;
+                case 'card':
+                    paymentText = 'Картой онлайн';
+                    break;
+                case 'card_courier':
+                    paymentText = 'Картой курьеру';
+                    break;
+                default:
+                    paymentText = 'Не указан';
+            }
+            
+            detailsContainer.innerHTML = `
+                <h4>Детали заказа</h4>
+                <p><strong>Имя:</strong> ${name}</p>
+                <p><strong>Телефон:</strong> ${phone}</p>
+                <p><strong>Адрес:</strong> ${address}</p>
+                <p><strong>Время доставки:</strong> ${time}</p>
+                <p><strong>Комментарий:</strong> ${comment || 'нет'}</p>
+                <p><strong>Способ оплаты:</strong> ${paymentText}</p>
+                <p><strong>Сумма заказа:</strong> ${total} ₽</p>
+            `;
+            
+            document.getElementById('orderSuccess').classList.add('active');
+        }
+
+        // Закрыть плашку завершения заказа
+        function closeSuccessModal() {
+            document.getElementById('orderSuccess').classList.remove('active');
+            
+            // Очищаем корзину
+            cart = [];
+            updateCartCount();
+            renderCart();
+            
+            // Очищаем форму
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('deliveryAddress').value = '';
+            document.getElementById('deliveryTime').value = '';
+            document.getElementById('orderComment').value = '';
+            document.getElementById('paymentMethod').value = 'cash';
+            
+            // Возвращаемся на главную страницу
+            showPage('home');
+        }
+
+        // Добавление CSS анимации для уведомлений
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
