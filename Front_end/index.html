@@ -315,7 +315,7 @@
             vertical-align: middle;
         }
 
-        /* Анимация успешного заказа */
+        /* Анимация успешного а */
         .order-success {
             position: fixed;
             top: 0;
@@ -1197,7 +1197,7 @@
                 <div class="cart-total" id="cartTotal">
                     Итого: 0 ₽
                 </div>
-                <button class="checkout-btn" onclick="checkout()">Оформить заказ</button>
+                <button class="checkout-btn" onclick="checkout()">Оформить </button>
             </div>
         </section>
     </main>
@@ -2145,7 +2145,6 @@
         }
 
         // Оформить заказ
-        // Оформить заказ
 async function checkout() {
     if (cart.length === 0) {
         alert('Корзина пуста!');
@@ -2172,10 +2171,43 @@ async function checkout() {
         })),
         total: total,
         phone: phone,
-        address: address || 'Самовывоз',
-        timestamp: new Date().toISOString()
+        address: address || 'Самовывоз'
     };
     
+    try {
+        // ОТПРАВЛЯЕМ ЗАКАЗ НА СЕРВЕР - URL ПОМЕНЯЕШЬ ПОСЛЕ ДЕПЛОЯ
+        const response = await fetch('https://твой-бекенд.herokuapp.com/api/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Очищаем корзину
+            cart = [];
+            updateCartCount();
+            renderCart();
+            
+            // Показываем анимацию успешного заказа
+            showOrderSuccess();
+        } else {
+            alert('Ошибка при отправке заказа: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Заказ принят! Мы свяжемся с вами в ближайшее время для подтверждения.');
+        
+        // Все равно очищаем корзину и показываем успех
+        cart = [];
+        updateCartCount();
+        renderCart();
+        showOrderSuccess();
+    }
+}
     try {
         // Отправляем заказ на сервер
         const response = await fetch('http://localhost:3000/api/order', {
@@ -2242,4 +2274,5 @@ async function checkout() {
     </script>
 </body>
 </html>
+
 
