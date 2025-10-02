@@ -13,4 +13,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "coffee-shop-bot-123"
-          heroku_email: "твоя-почта@gmail.com"
+          heroku_email: "bossofthecum@gmail.com"
