@@ -272,6 +272,36 @@
             color: var(--brown);
             font-weight: 600;
             font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .nutrition-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nutrition-item {
+            text-align: center;
+        }
+
+        .nutrition-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--beige);
+        }
+
+        .nutrition-label {
+            font-size: 0.7rem;
+            color: var(--light-beige);
+            opacity: 0.8;
+        }
+
+        .calories {
+            color: var(--brown);
         }
 
         .product-badge {
@@ -437,6 +467,49 @@
             margin-bottom: 2rem;
         }
 
+        /* БЖУ в модальном окне */
+        .modal-nutrition {
+            background-color: rgba(141, 110, 99, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .nutrition-title {
+            font-size: 1.3rem;
+            color: var(--beige);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .nutrition-item-large {
+            padding: 0.8rem;
+        }
+
+        .nutrition-value-large {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--beige);
+            display: block;
+        }
+
+        .nutrition-label-large {
+            font-size: 0.9rem;
+            color: var(--light-beige);
+            opacity: 0.8;
+        }
+
+        .calories-large {
+            color: var(--brown);
+        }
+
         .add-to-cart-btn {
             background-color: var(--brown);
             color: white;
@@ -447,6 +520,7 @@
             cursor: pointer;
             transition: background-color 0.3s;
             margin-top: 1rem;
+            width: 100%;
         }
 
         .add-to-cart-btn:hover {
@@ -899,6 +973,15 @@
             .success-icon::before {
                 font-size: 3rem;
             }
+
+            .nutrition-info {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .nutrition-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 480px) {
@@ -959,6 +1042,14 @@
 
             .success-message {
                 font-size: 1.1rem;
+            }
+
+            .nutrition-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nutrition-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1160,6 +1251,14 @@
             <p id="modalDescription" class="modal-description"></p>
             <p id="modalPrice" class="modal-price"></p>
             
+            <!-- БЖУ в модальном окне -->
+            <div class="modal-nutrition">
+                <h3 class="nutrition-title">Пищевая ценность</h3>
+                <div class="nutrition-grid" id="modalNutritionGrid">
+                    <!-- БЖУ будут добавляться сюда -->
+                </div>
+            </div>
+            
             <!-- Секция допингов -->
             <div class="addons-section">
                 <h3 class="addons-title">Дополнительные опции</h3>
@@ -1173,13 +1272,19 @@
     </div>
 
     <script>
-        // Полная база данных кофе с допингами
+        // Полная база данных кофе с допингами и БЖУ
         const coffeeData = {
             1: {
                 name: "Эспрессо",
                 image: "img/espresso.jpg",
                 description: "Классический итальянский эспрессо - крепкий, насыщенный кофе с плотной пенкой. Идеальный выбор для настоящих ценителей кофе. Подается в маленькой чашке для максимального сохранения аромата.",
                 price: 290,
+                nutrition: {
+                    calories: 5,
+                    protein: 0.3,
+                    fat: 0.1,
+                    carbs: 0.7
+                },
                 addons: [
                     { name: "Двойная порция", price: 120 },
                     { name: "Сироп ванильный", price: 60 },
@@ -1194,6 +1299,12 @@
                 image: "img/Capuchino.jpg",
                 description: "Идеальное сочетание эспрессо, молока и молочной пенки. Наш бариста создает нежную пенку, которая сохраняет температуру напитка и подчеркивает вкус кофе. Украшается рисунком на пенке.",
                 price: 350,
+                nutrition: {
+                    calories: 120,
+                    protein: 6.5,
+                    fat: 5.2,
+                    carbs: 9.8
+                },
                 addons: [
                     { name: "Корица", price: 30 },
                     { name: "Сироп кленовый", price: 60 },
@@ -1208,6 +1319,12 @@
                 image: "img/Latte.jpg",
                 description: "Нежный кофейный напиток на основе эспрессо с большим количеством вспененного молока. Имеет мягкий вкус и кремовую текстуру. Идеален для тех, кто предпочитает менее крепкий кофе.",
                 price: 380,
+                nutrition: {
+                    calories: 180,
+                    protein: 9.2,
+                    fat: 7.8,
+                    carbs: 15.3
+                },
                 addons: [
                     { name: "Сироп миндальный", price: 60 },
                     { name: "Кокосовое молоко", price: 80 },
@@ -1222,6 +1339,12 @@
                 image: "img/Amerikano.jpg",
                 description: "Эспрессо, разбавленный горячей водой. Сохраняет насыщенный вкус и аромат кофе, но имеет меньшую крепость. Отличный выбор для длительного наслаждения кофе.",
                 price: 310,
+                nutrition: {
+                    calories: 15,
+                    protein: 0.5,
+                    fat: 0.2,
+                    carbs: 2.1
+                },
                 addons: [
                     { name: "Лимон", price: 30 },
                     { name: "Сироп апельсиновый", price: 60 },
@@ -1236,6 +1359,12 @@
                 image: "img/Moccachino.jpg",
                 description: "Восхитительное сочетание эспрессо, шоколада и молока. Наш моккачино готовится с использованием качественного какао и украшается взбитыми сливками. Настоящее удовольствие для сладкоежек.",
                 price: 420,
+                nutrition: {
+                    calories: 290,
+                    protein: 8.5,
+                    fat: 12.3,
+                    carbs: 35.7
+                },
                 addons: [
                     { name: "Белый шоколад", price: 80 },
                     { name: "Мятный сироп", price: 60 },
@@ -1250,6 +1379,12 @@
                 image: "img/Raf.jpg",
                 description: "Популярный российский кофейный напиток, приготовленный на основе эспрессо, сливок и ванильного сахара. Взбивается в питчере до образования нежной пенки. Имеет мягкий сливочный вкус.",
                 price: 450,
+                nutrition: {
+                    calories: 210,
+                    protein: 4.8,
+                    fat: 15.6,
+                    carbs: 18.9
+                },
                 addons: [
                     { name: "Кокосовые сливки", price: 90 },
                     { name: "Сироп фундука", price: 60 },
@@ -1264,6 +1399,12 @@
                 image: "img/Flat_White.jpg",
                 description: "Австралийский кофейный напиток с двойной порцией эспрессо и тонким слоем микрофомы. Более крепкий, чем латте, с насыщенным кофейным вкусом.",
                 price: 390,
+                nutrition: {
+                    calories: 135,
+                    protein: 7.8,
+                    fat: 6.4,
+                    carbs: 11.2
+                },
                 addons: [
                     { name: "Дополнительная порция эспрессо", price: 120 },
                     { name: "Сироп ирландский крем", price: 70 },
@@ -1277,6 +1418,12 @@
                 image: "img/iced_latte.jpg",
                 description: "Освежающий холодный кофейный напиток на основе эспрессо и охлажденного молока. Подается со льдом, идеален в жаркую погоду.",
                 price: 370,
+                nutrition: {
+                    calories: 160,
+                    protein: 8.1,
+                    fat: 6.9,
+                    carbs: 14.5
+                },
                 addons: [
                     { name: "Карамельный сироп", price: 60 },
                     { name: "Мятный сироп", price: 60 },
@@ -1290,6 +1437,12 @@
                 image: "img/Macchiato.jpg",
                 description: "Эспрессо с небольшим количеством молочной пенки. Сохраняет крепость эспрессо, но с более мягким вкусом благодаря пенке.",
                 price: 320,
+                nutrition: {
+                    calories: 25,
+                    protein: 1.8,
+                    fat: 1.2,
+                    carbs: 2.4
+                },
                 addons: [
                     { name: "Карамельная пенка", price: 70 },
                     { name: "Шоколадная стружка", price: 45 },
@@ -1302,6 +1455,12 @@
                 image: "img/Tyrish.jpg",
                 description: "Традиционный турецкий кофе, приготовленный в джезве. Имеет насыщенный вкус и аромат, подается с осадком.",
                 price: 280,
+                nutrition: {
+                    calories: 8,
+                    protein: 0.4,
+                    fat: 0.2,
+                    carbs: 1.3
+                },
                 addons: [
                     { name: "Кардамон", price: 40 },
                     { name: "Гвоздика", price: 35 },
@@ -1312,43 +1471,79 @@
             }
         };
 
-        // База данных десертов
+        // База данных десертов с БЖУ
         const dessertsData = {
             1: {
                 name: "Тирамису",
                 image: "img/Tiramisu.jpg",
                 description: "Классический итальянский десерт из печенья савоярди, пропитанного эспрессо, с нежным кремом маскарпоне и какао.",
-                price: 450
+                price: 450,
+                nutrition: {
+                    calories: 420,
+                    protein: 8.9,
+                    fat: 24.7,
+                    carbs: 45.3
+                }
             },
             2: {
                 name: "Чизкейк Нью-Йорк",
                 image: "img/Cake_NY.jpg",
                 description: "Нежный сливочный чизкейк с песочной основой. Подается с ягодным соусом на выбор.",
-                price: 380
+                price: 380,
+                nutrition: {
+                    calories: 380,
+                    protein: 7.2,
+                    fat: 22.5,
+                    carbs: 38.9
+                }
             },
             3: {
                 name: "Круассан с шоколадом",
                 image: "img/Cryasan.jpg",
                 description: "Свежий слоеный круассан с начинкой из бельгийского шоколада. Идеально сочетается с кофе.",
-                price: 220
+                price: 220,
+                nutrition: {
+                    calories: 280,
+                    protein: 5.8,
+                    fat: 15.4,
+                    carbs: 32.1
+                }
             },
             4: {
                 name: "Макаруны",
                 image: "img/macaroon.jpg",
                 description: "Набор из 4-х нежных французских пирожных с различными вкусами: ваниль, шоколад, малина, фисташка.",
-                price: 320
+                price: 320,
+                nutrition: {
+                    calories: 360,
+                    protein: 4.2,
+                    fat: 16.8,
+                    carbs: 52.4
+                }
             },
             5: {
                 name: "Брауни",
                 image: "img/brayni.jpg",
                 description: "Шоколадный брауни с орехами пекан, подается теплым с шариком ванильного мороженого.",
-                price: 350
+                price: 350,
+                nutrition: {
+                    calories: 410,
+                    protein: 6.5,
+                    fat: 23.8,
+                    carbs: 48.2
+                }
             },
             6: {
                 name: "Медовик",
                 image: "img/medovik.jpg",
                 description: "Традиционный русский торт из медовых коржей со сметанным кремом.",
-                price: 280
+                price: 280,
+                nutrition: {
+                    calories: 320,
+                    protein: 5.1,
+                    fat: 14.6,
+                    carbs: 43.8
+                }
             }
         };
 
@@ -1493,6 +1688,24 @@
                 <div class="coffee-info">
                     <h3 class="coffee-name">${coffee.name}</h3>
                     <p class="coffee-price">${coffee.price} ₽</p>
+                    <div class="nutrition-info">
+                        <div class="nutrition-item">
+                            <div class="nutrition-value calories">${coffee.nutrition.calories}</div>
+                            <div class="nutrition-label">ккал</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">${coffee.nutrition.protein}г</div>
+                            <div class="nutrition-label">белки</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">${coffee.nutrition.fat}г</div>
+                            <div class="nutrition-label">жиры</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">${coffee.nutrition.carbs}г</div>
+                            <div class="nutrition-label">углеводы</div>
+                        </div>
+                    </div>
                 </div>
             `;
             card.addEventListener('click', () => openCoffeeModal(coffee, id));
@@ -1508,6 +1721,24 @@
                 <div class="coffee-info">
                     <h3 class="coffee-name">${dessert.name}</h3>
                     <p class="coffee-price">${dessert.price} ₽</p>
+                    <div class="nutrition-info">
+                        <div class="nutrition-item">
+                            <div class="nutrition-value calories">${dessert.nutrition.calories}</div>
+                            <div class="nutrition-label">ккал</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">${dessert.nutrition.protein}г</div>
+                            <div class="nutrition-label">белки</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">${dessert.nutrition.fat}г</div>
+                            <div class="nutrition-label">жиры</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">${dessert.nutrition.carbs}г</div>
+                            <div class="nutrition-label">углеводы</div>
+                        </div>
+                    </div>
                 </div>
             `;
             card.addEventListener('click', () => openDessertModal(dessert, id));
@@ -1528,6 +1759,9 @@
             document.getElementById('modalTitle').textContent = coffee.name;
             document.getElementById('modalDescription').textContent = coffee.description;
             document.getElementById('modalPrice').textContent = `${coffee.price} ₽`;
+            
+            // Рендерим БЖУ
+            renderNutrition(coffee.nutrition);
             
             // Показываем кнопку добавления в корзину
             document.getElementById('addToCartBtn').style.display = 'block';
@@ -1552,6 +1786,9 @@
             document.getElementById('modalDescription').textContent = dessert.description;
             document.getElementById('modalPrice').textContent = `${dessert.price} ₽`;
             
+            // Рендерим БЖУ
+            renderNutrition(dessert.nutrition);
+            
             // Показываем кнопку добавления в корзину
             document.getElementById('addToCartBtn').style.display = 'block';
             document.getElementById('addToCartBtn').textContent = 'Добавить в корзину';
@@ -1560,6 +1797,29 @@
             // Скрыть секцию с допингами для десертов
             document.querySelector('.addons-section').style.display = 'none';
             document.getElementById('coffeeModal').style.display = 'flex';
+        }
+
+        // Рендер БЖУ в модальном окне
+        function renderNutrition(nutrition) {
+            const grid = document.getElementById('modalNutritionGrid');
+            grid.innerHTML = '';
+            
+            const nutritionData = [
+                { value: nutrition.calories, label: 'ккал', className: 'calories-large' },
+                { value: nutrition.protein + 'г', label: 'Белки' },
+                { value: nutrition.fat + 'г', label: 'Жиры' },
+                { value: nutrition.carbs + 'г', label: 'Углеводы' }
+            ];
+            
+            nutritionData.forEach(item => {
+                const nutritionElement = document.createElement('div');
+                nutritionElement.className = 'nutrition-item-large';
+                nutritionElement.innerHTML = `
+                    <span class="nutrition-value-large ${item.className || ''}">${item.value}</span>
+                    <span class="nutrition-label-large">${item.label}</span>
+                `;
+                grid.appendChild(nutritionElement);
+            });
         }
 
         // Рендер допингов
@@ -1748,6 +2008,9 @@
                 totalPrice += addon.price;
             });
             document.getElementById('modalPrice').textContent = `${totalPrice} ₽`;
+            
+            // Рендерим БЖУ
+            renderNutrition(product.nutrition);
             
             // Для кофе показываем допинги, для десертов скрываем
             if (product.type === 'coffee') {
