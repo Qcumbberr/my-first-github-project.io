@@ -221,6 +221,16 @@
             color: var(--beige);
         }
 
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--light-beige);
+            border-bottom: 2px solid var(--brown);
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+        }
+
         .coffee-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -262,6 +272,99 @@
             color: var(--brown);
             font-weight: 600;
             font-size: 1.3rem;
+        }
+
+        .product-badge {
+            display: inline-block;
+            background-color: var(--brown);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* Анимация успешного заказа */
+        .order-success {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 31, 29, 0.95), rgba(58, 44, 40, 0.98));
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .order-success.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--brown);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            animation: bounceIn 0.8s ease;
+            position: relative;
+        }
+
+        .success-icon::before {
+            content: '☕';
+            font-size: 4rem;
+            animation: coffeeSteam 2s ease-in-out infinite;
+        }
+
+        .success-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--beige);
+            margin-bottom: 1rem;
+            animation: slideUp 0.8s ease 0.3s both;
+        }
+
+        .success-message {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--light-beige);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+            animation: slideUp 0.8s ease 0.5s both;
+        }
+
+        .success-submessage {
+            font-size: 1.1rem;
+            color: var(--beige);
+            margin-bottom: 3rem;
+            animation: slideUp 0.8s ease 0.7s both;
+        }
+
+        .success-btn {
+            background-color: var(--brown);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: slideUp 0.8s ease 0.9s both;
+        }
+
+        .success-btn:hover {
+            background-color: var(--accent-brown);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         /* Модальное окно с описанием товара */
@@ -645,6 +748,52 @@
             transform: translateY(-3px);
         }
 
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes coffeeSteam {
+            0%, 100% { 
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateY(-10px) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         /* Адаптивность */
         @media (max-width: 1024px) {
             .coffee-grid {
@@ -741,6 +890,15 @@
             .cart-icon {
                 display: none;
             }
+
+            .success-icon {
+                width: 100px;
+                height: 100px;
+            }
+
+            .success-icon::before {
+                font-size: 3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -785,6 +943,23 @@
                 width: 55px;
                 height: 55px;
             }
+
+            .success-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .success-icon::before {
+                font-size: 2.5rem;
+            }
+
+            .success-title {
+                font-size: 1.8rem;
+            }
+
+            .success-message {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -802,7 +977,6 @@
                 <ul id="navMenu">
                     <li><a onclick="showPage('home')">Главная</a></li>
                     <li><a onclick="showPage('menu')">Меню</a></li>
-                    <li><a onclick="showPage('desserts')">Десерты</a></li>
                     <li><a onclick="showPage('about')">О нас</a></li>
                     <li class="cart-icon" onclick="showPage('cart')">
                         🛒
@@ -832,31 +1006,38 @@
                 <a onclick="showPage('menu')" class="btn">Посмотреть меню</a>
             </section>
 
-            <!-- Секция с видами кофе -->
+            <!-- Секция с популярными напитками -->
             <section class="coffee-section" id="coffee">
                 <h2 class="section-title">Самые популярные напитки</h2>
                 <div class="coffee-grid" id="popularCoffeeGrid">
-                    <!-- Только 6 самых актуальных видов кофе -->
+                    <!-- 6 самых популярных видов кофе -->
+                </div>
+            </section>
+
+            <!-- Секция с популярными десертами -->
+            <section class="coffee-section" id="desserts">
+                <h2 class="section-title">Популярные десерты</h2>
+                <div class="coffee-grid" id="popularDessertsGrid">
+                    <!-- 2 самых популярных десерта -->
                 </div>
             </section>
         </section>
 
-        <!-- Страница меню -->
+        <!-- Страница меню (объединенная) -->
         <section id="menu" class="page">
             <div class="coffee-section">
-                <h2 class="section-title">Полное меню кофе</h2>
+                <h2 class="section-title">Наше меню</h2>
+                
+                <!-- Кофе -->
+                <h3 class="section-subtitle">Кофейные напитки</h3>
                 <div class="coffee-grid" id="fullCoffeeGrid">
                     <!-- Все виды кофе -->
                 </div>
-            </div>
-        </section>
 
-        <!-- Страница десертов -->
-        <section id="desserts" class="page">
-            <div class="coffee-section">
-                <h2 class="section-title">Наши десерты</h2>
-                <div class="coffee-grid" id="dessertsGrid">
-                    <!-- Десерты будут добавляться сюда -->
+                <!-- Десерты -->
+                <h3 class="section-subtitle">Десерты</h3>
+                <div class="coffee-grid" id="fullDessertsGrid">
+                    <!-- Все десерты -->
                 </div>
             </div>
         </section>
@@ -929,6 +1110,15 @@
             </div>
         </section>
     </main>
+
+    <!-- Анимация успешного заказа -->
+    <div class="order-success" id="orderSuccess">
+        <div class="success-icon"></div>
+        <h1 class="success-title">Заказ принят! 🎉</h1>
+        <p class="success-message">Ваш кофе уже готовится и скоро будет у вас!</p>
+        <p class="success-submessage">Наслаждайтесь каждым глотком ☕</p>
+        <button class="success-btn" onclick="closeOrderSuccess()">Продолжить покупки</button>
+    </div>
 
     <!-- Кнопка возврата наверх -->
     <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
@@ -1015,7 +1205,7 @@
             },
             3: {
                 name: "Латте",
-                image: "img/latte.jpg",
+                image: "img/Latte.jpg",
                 description: "Нежный кофейный напиток на основе эспрессо с большим количеством вспененного молока. Имеет мягкий вкус и кремовую текстуру. Идеален для тех, кто предпочитает менее крепкий кофе.",
                 price: 380,
                 addons: [
@@ -1084,7 +1274,7 @@
             },
             8: {
                 name: "Айс Латте",
-                image: "img/Iced_latte.jpg",
+                image: "img/iced_latte.jpg",
                 description: "Освежающий холодный кофейный напиток на основе эспрессо и охлажденного молока. Подается со льдом, идеален в жаркую погоду.",
                 price: 370,
                 addons: [
@@ -1144,7 +1334,7 @@
             },
             4: {
                 name: "Макаруны",
-                image: "img/Macaroon.jpg",
+                image: "img/macaroon.jpg",
                 description: "Набор из 4-х нежных французских пирожных с различными вкусами: ваниль, шоколад, малина, фисташка.",
                 price: 320
             },
@@ -1178,8 +1368,9 @@
         // Инициализация приложения
         function initializeApp() {
             renderPopularCoffee();
+            renderPopularDesserts();
             renderFullCoffeeMenu();
-            renderDesserts();
+            renderFullDessertsMenu();
             updateCartCount();
         }
 
@@ -1258,6 +1449,18 @@
             });
         }
 
+        // Рендер популярных десертов (2 штуки)
+        function renderPopularDesserts() {
+            const grid = document.getElementById('popularDessertsGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(dessertsData).slice(0, 2).forEach(id => {
+                const dessert = dessertsData[id];
+                const card = createDessertCard(dessert, id);
+                grid.appendChild(card);
+            });
+        }
+
         // Рендер полного меню кофе
         function renderFullCoffeeMenu() {
             const grid = document.getElementById('fullCoffeeGrid');
@@ -1269,23 +1472,14 @@
             });
         }
 
-        // Рендер десертов
-        function renderDesserts() {
-            const grid = document.getElementById('dessertsGrid');
+        // Рендер полного меню десертов
+        function renderFullDessertsMenu() {
+            const grid = document.getElementById('fullDessertsGrid');
             grid.innerHTML = '';
             
             Object.keys(dessertsData).forEach(id => {
                 const dessert = dessertsData[id];
-                const card = document.createElement('div');
-                card.className = 'coffee-card';
-                card.innerHTML = `
-                    <img src="${dessert.image}" alt="${dessert.name}" class="coffee-img" onerror="this.style.backgroundColor='var(--brown)'; this.alt='Изображение временно недоступно'">
-                    <div class="coffee-info">
-                        <h3 class="coffee-name">${dessert.name}</h3>
-                        <p class="coffee-price">${dessert.price} ₽</p>
-                    </div>
-                `;
-                card.addEventListener('click', () => openDessertModal(dessert, id));
+                const card = createDessertCard(dessert, id);
                 grid.appendChild(card);
             });
         }
@@ -1302,6 +1496,21 @@
                 </div>
             `;
             card.addEventListener('click', () => openCoffeeModal(coffee, id));
+            return card;
+        }
+
+        // Создание карточки десерта
+        function createDessertCard(dessert, id) {
+            const card = document.createElement('div');
+            card.className = 'coffee-card';
+            card.innerHTML = `
+                <img src="${dessert.image}" alt="${dessert.name}" class="coffee-img" onerror="this.style.backgroundColor='var(--brown)'; this.alt='Изображение временно недоступно'">
+                <div class="coffee-info">
+                    <h3 class="coffee-name">${dessert.name}</h3>
+                    <p class="coffee-price">${dessert.price} ₽</p>
+                </div>
+            `;
+            card.addEventListener('click', () => openDessertModal(dessert, id));
             return card;
         }
 
@@ -1636,11 +1845,26 @@
             }
             
             const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
-            alert(`Заказ оформлен! Сумма заказа: ${total} ₽\n\nСпасибо за заказ! Мы свяжемся с вами в ближайшее время.`);
             
+            // Очищаем корзину
             cart = [];
             updateCartCount();
             renderCart();
+            
+            // Показываем анимацию успешного заказа
+            showOrderSuccess();
+        }
+
+        // Показать анимацию успешного заказа
+        function showOrderSuccess() {
+            document.getElementById('orderSuccess').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку
+        }
+
+        // Закрыть анимацию успешного заказа
+        function closeOrderSuccess() {
+            document.getElementById('orderSuccess').classList.remove('active');
+            document.body.style.overflow = ''; // Разблокируем прокрутку
             showPage('home');
         }
 
@@ -1662,4 +1886,3 @@
     </script>
 </body>
 </html>
-
