@@ -120,7 +120,7 @@
         .hero {
             height: 100vh;
             background: linear-gradient(rgba(42, 31, 29, 0.7), rgba(42, 31, 29, 0.7)), 
-                        url('/img/main_bc.jpg') no-repeat center center/cover;
+                        url('img/main_bc.jpg') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -200,6 +200,7 @@
             width: 100%;
             height: 220px;
             object-fit: cover;
+            background-color: var(--brown); /* Запасной фон если изображение не загрузится */
         }
 
         .coffee-info {
@@ -265,6 +266,7 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1.5rem;
+            background-color: var(--brown); /* Запасной фон */
         }
 
         .modal-title {
@@ -368,7 +370,7 @@
         .about-hero {
             height: 60vh;
             background: linear-gradient(rgba(42, 31, 29, 0.8), rgba(42, 31, 29, 0.8)), 
-                        url('/img/About_Us_Bc.jpg') no-repeat center center/cover;
+                        url('img/About_Us_Bc.jpg') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -915,7 +917,7 @@
         const coffeeData = {
             1: {
                 name: "Эспрессо",
-                image: "/img/espresso.jpg",
+                image: "img/espresso.jpg",
                 description: "Классический итальянский эспрессо - крепкий, насыщенный кофе с плотной пенкой. Идеальный выбор для настоящих ценителей кофе. Подается в маленькой чашке для максимального сохранения аромата.",
                 price: 290,
                 addons: [
@@ -929,7 +931,7 @@
             },
             2: {
                 name: "Капучино",
-                image: "/img/Capuchino.jpg",
+                image: "img/Capuchino.jpg",
                 description: "Идеальное сочетание эспрессо, молока и молочной пенки. Наш бариста создает нежную пенку, которая сохраняет температуру напитка и подчеркивает вкус кофе. Украшается рисунком на пенке.",
                 price: 350,
                 addons: [
@@ -943,7 +945,7 @@
             },
             3: {
                 name: "Латте",
-                image: "/img/Latte.jpg",
+                image: "img/Latte.jpg",
                 description: "Нежный кофейный напиток на основе эспрессо с большим количеством вспененного молока. Имеет мягкий вкус и кремовую текстуру. Идеален для тех, кто предпочитает менее крепкий кофе.",
                 price: 380,
                 addons: [
@@ -957,7 +959,7 @@
             },
             4: {
                 name: "Американо",
-                image: "/img/Amerikano.jpg",
+                image: "img/Amerikano.jpg",
                 description: "Эспрессо, разбавленный горячей водой. Сохраняет насыщенный вкус и аромат кофе, но имеет меньшую крепость. Отличный выбор для длительного наслаждения кофе.",
                 price: 310,
                 addons: [
@@ -971,7 +973,7 @@
             },
             5: {
                 name: "Моккачино",
-                image: "/img/Moccachino.jpg",
+                image: "img/Moccachino.jpg",
                 description: "Восхитительное сочетание эспрессо, шоколада и молока. Наш моккачино готовится с использованием качественного какао и украшается взбитыми сливками. Настоящее удовольствие для сладкоежек.",
                 price: 420,
                 addons: [
@@ -985,7 +987,7 @@
             },
             6: {
                 name: "Раф кофе",
-                image: "/img/Raf.jpg",
+                image: "img/Raf.jpg",
                 description: "Популярный российский кофейный напиток, приготовленный на основе эспрессо, сливок и ванильного сахара. Взбивается в питчере до образования нежной пенки. Имеет мягкий сливочный вкус.",
                 price: 450,
                 addons: [
@@ -999,7 +1001,7 @@
             },
             7: {
                 name: "Флэт Уайт",
-                image: "/img/Flat_White.jpg",
+                image: "img/Flat_White.jpg",
                 description: "Австралийский кофейный напиток с двойной порцией эспрессо и тонким слоем микрофомы. Более крепкий, чем латте, с насыщенным кофейным вкусом.",
                 price: 390,
                 addons: [
@@ -1012,7 +1014,7 @@
             },
             8: {
                 name: "Айс Латте",
-                image: "/img/iced_latte.jpg",
+                image: "img/iced_latte.jpg",
                 description: "Освежающий холодный кофейный напиток на основе эспрессо и охлажденного молока. Подается со льдом, идеален в жаркую погоду.",
                 price: 370,
                 addons: [
@@ -1025,7 +1027,7 @@
             },
             9: {
                 name: "Макиато",
-                image: "/img/Macchiato.jpg",
+                image: "img/Macchiato.jpg",
                 description: "Эспрессо с небольшим количеством молочной пенки. Сохраняет крепость эспрессо, но с более мягким вкусом благодаря пенке.",
                 price: 320,
                 addons: [
@@ -1037,7 +1039,7 @@
             },
             10: {
                 name: "Кофе по-турецки",
-                image: "/img/Tyrish.jpg",
+                image: "img/Tyrish.jpg",
                 description: "Традиционный турецкий кофе, приготовленный в джезве. Имеет насыщенный вкус и аромат, подается с осадком.",
                 price: 280,
                 addons: [
@@ -1054,37 +1056,37 @@
         const dessertsData = {
             1: {
                 name: "Тирамису",
-                image: "/img/Tiramisu.jpg",
+                image: "img/Tiramisu.jpg",
                 description: "Классический итальянский десерт из печенья савоярди, пропитанного эспрессо, с нежным кремом маскарпоне и какао.",
                 price: 450
             },
             2: {
                 name: "Чизкейк Нью-Йорк",
-                image: "/img/Cake_NY.jpg",
+                image: "img/Cake_NY.jpg",
                 description: "Нежный сливочный чизкейк с песочной основой. Подается с ягодным соусом на выбор.",
                 price: 380
             },
             3: {
                 name: "Круассан с шоколадом",
-                image: "/img/Cryasan.jpg",
+                image: "img/Cryasan.jpg",
                 description: "Свежий слоеный круассан с начинкой из бельгийского шоколада. Идеально сочетается с кофе.",
                 price: 220
             },
             4: {
                 name: "Макаруны",
-                image: "/img/macaroon.jpg",
+                image: "img/macaroon.jpg",
                 description: "Набор из 4-х нежных французских пирожных с различными вкусами: ваниль, шоколад, малина, фисташка.",
                 price: 320
             },
             5: {
                 name: "Брауни",
-                image: "/img/brayni.jpg",
+                image: "img/brayni.jpg",
                 description: "Шоколадный брауни с орехами пекан, подается теплым с шариком ванильного мороженого.",
                 price: 350
             },
             6: {
                 name: "Медовик",
-                image: "/img/medovik.jpg",
+                image: "img/medovik.jpg",
                 description: "Традиционный русский торт из медовых коржей со сметанным кремом.",
                 price: 280
             }
@@ -1207,7 +1209,7 @@
                 const card = document.createElement('div');
                 card.className = 'coffee-card';
                 card.innerHTML = `
-                    <img src="${dessert.image}" alt="${dessert.name}" class="coffee-img">
+                    <img src="${dessert.image}" alt="${dessert.name}" class="coffee-img" onerror="this.style.backgroundColor='var(--brown)'; this.alt='Изображение временно недоступно'">
                     <div class="coffee-info">
                         <h3 class="coffee-name">${dessert.name}</h3>
                         <p class="coffee-price">${dessert.price} ₽</p>
@@ -1223,7 +1225,7 @@
             const card = document.createElement('div');
             card.className = 'coffee-card';
             card.innerHTML = `
-                <img src="${coffee.image}" alt="${coffee.name}" class="coffee-img">
+                <img src="${coffee.image}" alt="${coffee.name}" class="coffee-img" onerror="this.style.backgroundColor='var(--brown)'; this.alt='Изображение временно недоступно'">
                 <div class="coffee-info">
                     <h3 class="coffee-name">${coffee.name}</h3>
                     <p class="coffee-price">${coffee.price} ₽</p>
@@ -1240,6 +1242,10 @@
             isViewMode = false;
             
             document.getElementById('modalImg').src = coffee.image;
+            document.getElementById('modalImg').onerror = function() {
+                this.style.backgroundColor = 'var(--brown)';
+                this.alt = 'Изображение временно недоступно';
+            };
             document.getElementById('modalTitle').textContent = coffee.name;
             document.getElementById('modalDescription').textContent = coffee.description;
             document.getElementById('modalPrice').textContent = `${coffee.price} ₽`;
@@ -1259,6 +1265,10 @@
             isViewMode = false;
             
             document.getElementById('modalImg').src = dessert.image;
+            document.getElementById('modalImg').onerror = function() {
+                this.style.backgroundColor = 'var(--brown)';
+                this.alt = 'Изображение временно недоступно';
+            };
             document.getElementById('modalTitle').textContent = dessert.name;
             document.getElementById('modalDescription').textContent = dessert.description;
             document.getElementById('modalPrice').textContent = `${dessert.price} ₽`;
@@ -1445,6 +1455,10 @@
             isViewMode = true; // Включаем режим просмотра
             
             document.getElementById('modalImg').src = product.image;
+            document.getElementById('modalImg').onerror = function() {
+                this.style.backgroundColor = 'var(--brown)';
+                this.alt = 'Изображение временно недоступно';
+            };
             document.getElementById('modalTitle').textContent = product.name;
             document.getElementById('modalDescription').textContent = product.description;
             
