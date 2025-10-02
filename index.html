@@ -1272,6 +1272,49 @@
     </div>
 
     <script>
+        // База данных допингов с БЖУ
+        const addonsData = {
+            "Двойная порция": { price: 120, nutrition: { calories: 5, protein: 0.3, fat: 0.1, carbs: 0.7 } },
+            "Сироп ванильный": { price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+            "Сироп карамельный": { price: 60, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11 } },
+            "Взбитые сливки": { price: 80, nutrition: { calories: 50, protein: 1, fat: 5, carbs: 1 } },
+            "Корица": { price: 30, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 2 } },
+            "Мускатный орех": { price: 40, nutrition: { calories: 12, protein: 0.1, fat: 0.8, carbs: 1.1 } },
+            "Сироп кленовый": { price: 60, nutrition: { calories: 52, protein: 0, fat: 0, carbs: 13 } },
+            "Шоколадная крошка": { price: 50, nutrition: { calories: 70, protein: 1, fat: 4, carbs: 8 } },
+            "Экстра порция молока": { price: 40, nutrition: { calories: 60, protein: 3, fat: 3, carbs: 5 } },
+            "Карамельный соус": { price: 50, nutrition: { calories: 90, protein: 0.5, fat: 3, carbs: 15 } },
+            "Тертый шоколад": { price: 45, nutrition: { calories: 55, protein: 1, fat: 3, carbs: 6 } },
+            "Сироп миндальный": { price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+            "Кокосовое молоко": { price: 80, nutrition: { calories: 45, protein: 0.5, fat: 4.5, carbs: 2 } },
+            "Карамельная крошка": { price: 50, nutrition: { calories: 80, protein: 0.5, fat: 2, carbs: 15 } },
+            "Ванильный сироп": { price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+            "Фундучный сироп": { price: 60, nutrition: { calories: 45, protein: 0.5, fat: 2, carbs: 8 } },
+            "Лимон": { price: 30, nutrition: { calories: 4, protein: 0.1, fat: 0, carbs: 1.3 } },
+            "Сироп апельсиновый": { price: 60, nutrition: { calories: 42, protein: 0, fat: 0, carbs: 10.5 } },
+            "Мед": { price: 40, nutrition: { calories: 64, protein: 0.1, fat: 0, carbs: 17 } },
+            "Имбирь": { price: 35, nutrition: { calories: 5, protein: 0.1, fat: 0.1, carbs: 1.1 } },
+            "Гвоздика": { price: 35, nutrition: { calories: 6, protein: 0.1, fat: 0.3, carbs: 1.4 } },
+            "Белый шоколад": { price: 80, nutrition: { calories: 145, protein: 2, fat: 9, carbs: 15 } },
+            "Мятный сироп": { price: 60, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+            "Маршмеллоу": { price: 50, nutrition: { calories: 90, protein: 0.5, fat: 0, carbs: 23 } },
+            "Тертый арахис": { price: 55, nutrition: { calories: 85, protein: 4, fat: 7, carbs: 3 } },
+            "Кокосовые сливки": { price: 90, nutrition: { calories: 50, protein: 0.5, fat: 5, carbs: 2 } },
+            "Коричневый сахар": { price: 30, nutrition: { calories: 45, protein: 0, fat: 0, carbs: 11.5 } },
+            "Ванильный экстракт": { price: 50, nutrition: { calories: 35, protein: 0, fat: 0, carbs: 1.5 } },
+            "Кленовый сироп": { price: 60, nutrition: { calories: 52, protein: 0, fat: 0, carbs: 13 } },
+            "Дополнительная порция эспрессо": { price: 120, nutrition: { calories: 5, protein: 0.3, fat: 0.1, carbs: 0.7 } },
+            "Сироп ирландский крем": { price: 70, nutrition: { calories: 65, protein: 0.5, fat: 2, carbs: 11 } },
+            "Цедра апельсина": { price: 35, nutrition: { calories: 6, protein: 0.1, fat: 0, carbs: 1.5 } },
+            "Ванильный сахар": { price: 25, nutrition: { calories: 40, protein: 0, fat: 0, carbs: 10 } },
+            "Ванильное мороженое": { price: 100, nutrition: { calories: 140, protein: 3, fat: 7, carbs: 17 } },
+            "Шоколадный соус": { price: 50, nutrition: { calories: 85, protein: 1, fat: 3, carbs: 15 } },
+            "Карамельная пенка": { price: 70, nutrition: { calories: 60, protein: 1, fat: 4, carbs: 5 } },
+            "Кардамон": { price: 40, nutrition: { calories: 6, protein: 0.2, fat: 0.4, carbs: 1.3 } },
+            "Роза": { price: 50, nutrition: { calories: 3, protein: 0, fat: 0, carbs: 0.6 } },
+            "Фисташки": { price: 60, nutrition: { calories: 80, protein: 3, fat: 7, carbs: 4 } }
+        };
+
         // Полная база данных кофе с допингами и БЖУ
         const coffeeData = {
             1: {
@@ -1286,12 +1329,12 @@
                     carbs: 0.7
                 },
                 addons: [
-                    { name: "Двойная порция", price: 120 },
-                    { name: "Сироп ванильный", price: 60 },
-                    { name: "Сироп карамельный", price: 60 },
-                    { name: "Взбитые сливки", price: 80 },
-                    { name: "Корица", price: 30 },
-                    { name: "Мускатный орех", price: 40 }
+                    "Двойная порция",
+                    "Сироп ванильный",
+                    "Сироп карамельный",
+                    "Взбитые сливки",
+                    "Корица",
+                    "Мускатный орех"
                 ]
             },
             2: {
@@ -1306,12 +1349,12 @@
                     carbs: 9.8
                 },
                 addons: [
-                    { name: "Корица", price: 30 },
-                    { name: "Сироп кленовый", price: 60 },
-                    { name: "Шоколадная крошка", price: 50 },
-                    { name: "Экстра порция молока", price: 40 },
-                    { name: "Карамельный соус", price: 50 },
-                    { name: "Тертый шоколад", price: 45 }
+                    "Корица",
+                    "Сироп кленовый",
+                    "Шоколадная крошка",
+                    "Экстра порция молока",
+                    "Карамельный соус",
+                    "Тертый шоколад"
                 ]
             },
             3: {
@@ -1326,12 +1369,12 @@
                     carbs: 15.3
                 },
                 addons: [
-                    { name: "Сироп миндальный", price: 60 },
-                    { name: "Кокосовое молоко", price: 80 },
-                    { name: "Мускатный орех", price: 40 },
-                    { name: "Карамельная крошка", price: 50 },
-                    { name: "Ванильный сироп", price: 60 },
-                    { name: "Фундучный сироп", price: 60 }
+                    "Сироп миндальный",
+                    "Кокосовое молоко",
+                    "Мускатный орех",
+                    "Карамельная крошка",
+                    "Ванильный сироп",
+                    "Фундучный сироп"
                 ]
             },
             4: {
@@ -1346,12 +1389,12 @@
                     carbs: 2.1
                 },
                 addons: [
-                    { name: "Лимон", price: 30 },
-                    { name: "Сироп апельсиновый", price: 60 },
-                    { name: "Мед", price: 40 },
-                    { name: "Имбирь", price: 35 },
-                    { name: "Корица", price: 30 },
-                    { name: "Гвоздика", price: 35 }
+                    "Лимон",
+                    "Сироп апельсиновый",
+                    "Мед",
+                    "Имбирь",
+                    "Корица",
+                    "Гвоздика"
                 ]
             },
             5: {
@@ -1366,12 +1409,12 @@
                     carbs: 35.7
                 },
                 addons: [
-                    { name: "Белый шоколад", price: 80 },
-                    { name: "Мятный сироп", price: 60 },
-                    { name: "Маршмеллоу", price: 50 },
-                    { name: "Шоколадная стружка", price: 45 },
-                    { name: "Карамельный соус", price: 50 },
-                    { name: "Тертый арахис", price: 55 }
+                    "Белый шоколад",
+                    "Мятный сироп",
+                    "Маршмеллоу",
+                    "Шоколадная стружка",
+                    "Карамельный соус",
+                    "Тертый арахис"
                 ]
             },
             6: {
@@ -1386,12 +1429,12 @@
                     carbs: 18.9
                 },
                 addons: [
-                    { name: "Кокосовые сливки", price: 90 },
-                    { name: "Сироп фундука", price: 60 },
-                    { name: "Коричневый сахар", price: 30 },
-                    { name: "Ванильный экстракт", price: 50 },
-                    { name: "Мед", price: 40 },
-                    { name: "Кленовый сироп", price: 60 }
+                    "Кокосовые сливки",
+                    "Сироп фундука",
+                    "Коричневый сахар",
+                    "Ванильный экстракт",
+                    "Мед",
+                    "Кленовый сироп"
                 ]
             },
             7: {
@@ -1406,11 +1449,11 @@
                     carbs: 11.2
                 },
                 addons: [
-                    { name: "Дополнительная порция эспрессо", price: 120 },
-                    { name: "Сироп ирландский крем", price: 70 },
-                    { name: "Цедра апельсина", price: 35 },
-                    { name: "Корица", price: 30 },
-                    { name: "Ванильный сахар", price: 25 }
+                    "Дополнительная порция эспрессо",
+                    "Сироп ирландский крем",
+                    "Цедра апельсина",
+                    "Корица",
+                    "Ванильный сахар"
                 ]
             },
             8: {
@@ -1425,11 +1468,11 @@
                     carbs: 14.5
                 },
                 addons: [
-                    { name: "Карамельный сироп", price: 60 },
-                    { name: "Мятный сироп", price: 60 },
-                    { name: "Ванильное мороженое", price: 100 },
-                    { name: "Шоколадный соус", price: 50 },
-                    { name: "Кокосовое молоко", price: 80 }
+                    "Карамельный сироп",
+                    "Мятный сироп",
+                    "Ванильное мороженое",
+                    "Шоколадный соус",
+                    "Кокосовое молоко"
                 ]
             },
             9: {
@@ -1444,10 +1487,10 @@
                     carbs: 2.4
                 },
                 addons: [
-                    { name: "Карамельная пенка", price: 70 },
-                    { name: "Шоколадная стружка", price: 45 },
-                    { name: "Корица", price: 30 },
-                    { name: "Ванильный сироп", price: 60 }
+                    "Карамельная пенка",
+                    "Шоколадная стружка",
+                    "Корица",
+                    "Ванильный сироп"
                 ]
             },
             10: {
@@ -1462,11 +1505,11 @@
                     carbs: 1.3
                 },
                 addons: [
-                    { name: "Кардамон", price: 40 },
-                    { name: "Гвоздика", price: 35 },
-                    { name: "Мед", price: 40 },
-                    { name: "Роза", price: 50 },
-                    { name: "Фисташки", price: 60 }
+                    "Кардамон",
+                    "Гвоздика",
+                    "Мед",
+                    "Роза",
+                    "Фисташки"
                 ]
             }
         };
@@ -1827,17 +1870,18 @@
             const grid = document.getElementById('addonsGrid');
             grid.innerHTML = '';
             
-            addons.forEach((addon, index) => {
+            addons.forEach((addonName, index) => {
+                const addon = addonsData[addonName];
                 const addonElement = document.createElement('div');
                 addonElement.className = 'addon-item';
                 addonElement.innerHTML = `
-                    <div class="addon-name">${addon.name}</div>
+                    <div class="addon-name">${addonName}</div>
                     <div class="addon-price">+${addon.price} ₽</div>
                 `;
                 
                 if (!isViewMode) {
                     // В обычном режиме - можно выбирать допинги
-                    addonElement.addEventListener('click', () => toggleAddon(addonElement, addon, index));
+                    addonElement.addEventListener('click', () => toggleAddon(addonElement, addonName, index));
                 } else {
                     // В режиме просмотра - нельзя выбирать
                     addonElement.style.cursor = 'default';
@@ -1851,15 +1895,15 @@
         }
 
         // Переключить выбор допинга
-        function toggleAddon(element, addon, index) {
+        function toggleAddon(element, addonName, index) {
             if (isViewMode) return; // В режиме просмотра нельзя менять допинги
             
             element.classList.toggle('selected');
             
             if (element.classList.contains('selected')) {
-                selectedAddons.push(addon);
+                selectedAddons.push(addonName);
             } else {
-                selectedAddons = selectedAddons.filter(a => a !== addon);
+                selectedAddons = selectedAddons.filter(a => a !== addonName);
             }
             
             updateModalPrice();
@@ -1868,8 +1912,8 @@
         // Обновить цену в модальном окне
         function updateModalPrice() {
             let totalPrice = currentCoffee.price;
-            selectedAddons.forEach(addon => {
-                totalPrice += addon.price;
+            selectedAddons.forEach(addonName => {
+                totalPrice += addonsData[addonName].price;
             });
             document.getElementById('modalPrice').textContent = `${totalPrice} ₽`;
         }
@@ -1892,8 +1936,8 @@
             if (!currentCoffee) return;
             
             let totalPrice = currentCoffee.price;
-            selectedAddons.forEach(addon => {
-                totalPrice += addon.price;
+            selectedAddons.forEach(addonName => {
+                totalPrice += addonsData[addonName].price;
             });
             
             const cartItem = {
@@ -1960,7 +2004,7 @@
                 cartItemElement.className = 'cart-item';
                 
                 const addonsText = item.addons.length > 0 
-                    ? `Допы: ${item.addons.map(a => a.name).join(', ')}`
+                    ? `Допы: ${item.addons.join(', ')}`
                     : '';
                 
                 cartItemElement.innerHTML = `
@@ -2004,8 +2048,8 @@
             
             // Показываем полную стоимость с допингами
             let totalPrice = product.price;
-            selectedAddons.forEach(addon => {
-                totalPrice += addon.price;
+            selectedAddons.forEach(addonName => {
+                totalPrice += addonsData[addonName].price;
             });
             document.getElementById('modalPrice').textContent = `${totalPrice} ₽`;
             
@@ -2035,13 +2079,13 @@
             const grid = document.getElementById('addonsGrid');
             grid.innerHTML = '';
             
-            addons.forEach((addon, index) => {
-                const isSelected = selectedAddons.some(a => a.name === addon.name);
+            addons.forEach((addonName, index) => {
+                const isSelected = selectedAddons.some(a => a === addonName);
                 const addonElement = document.createElement('div');
                 addonElement.className = `addon-item ${isSelected ? 'selected' : ''}`;
                 addonElement.innerHTML = `
-                    <div class="addon-name">${addon.name}</div>
-                    <div class="addon-price">+${addon.price} ₽</div>
+                    <div class="addon-name">${addonName}</div>
+                    <div class="addon-price">+${addonsData[addonName].price} ₽</div>
                 `;
                 // Отключаем возможность выбора допингов в режиме просмотра
                 addonElement.style.cursor = 'default';
@@ -2059,8 +2103,8 @@
             
             // Добавляем новый с текущими настройками
             let totalPrice = currentCoffee.price;
-            selectedAddons.forEach(addon => {
-                totalPrice += addon.price;
+            selectedAddons.forEach(addonName => {
+                totalPrice += addonsData[addonName].price;
             });
             
             const cartItem = {
