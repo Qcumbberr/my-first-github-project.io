@@ -116,6 +116,51 @@
             transition: 0.3s;
         }
 
+        /* Плавающая кнопка корзины для мобильных */
+        .floating-cart {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--brown);
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 99;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .floating-cart:hover {
+            background-color: var(--accent-brown);
+            transform: scale(1.1);
+        }
+
+        .floating-cart .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .floating-cart svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
         /* Основной контент */
         .hero {
             height: 100vh;
@@ -219,7 +264,7 @@
             font-size: 1.3rem;
         }
 
-        /* Модальное окно с описанием */
+        /* Модальное окно с описанием товара */
         .modal {
             display: none;
             position: fixed;
@@ -681,10 +726,20 @@
             }
 
             .scroll-to-top {
-                bottom: 20px;
+                bottom: 100px; /* Поднимаем выше чтобы не мешала корзине */
                 right: 20px;
                 width: 45px;
                 height: 45px;
+            }
+
+            /* Показываем плавающую корзину на мобильных */
+            .floating-cart {
+                display: flex;
+            }
+
+            /* Скрываем корзину в хедере на мобильных */
+            .cart-icon {
+                display: none;
             }
         }
 
@@ -718,10 +773,17 @@
             }
 
             .scroll-to-top {
-                bottom: 15px;
+                bottom: 90px;
                 right: 15px;
                 width: 40px;
                 height: 40px;
+            }
+
+            .floating-cart {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
             }
         }
     </style>
@@ -750,6 +812,14 @@
             </nav>
         </div>
     </header>
+
+    <!-- Плавающая кнопка корзины для мобильных -->
+    <div class="floating-cart" id="floatingCart" onclick="showPage('cart')">
+        <div class="cart-count" id="floatingCartCount">0</div>
+        <svg viewBox="0 0 24 24">
+            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+    </div>
 
     <!-- Основной контент -->
     <main>
@@ -945,7 +1015,7 @@
             },
             3: {
                 name: "Латте",
-                image: "img/latte.jpg",
+                image: "img/Latte.jpg",
                 description: "Нежный кофейный напиток на основе эспрессо с большим количеством вспененного молока. Имеет мягкий вкус и кремовую текстуру. Идеален для тех, кто предпочитает менее крепкий кофе.",
                 price: 380,
                 addons: [
@@ -1014,7 +1084,7 @@
             },
             8: {
                 name: "Айс Латте",
-                image: "img/Iced_latte.jpg",
+                image: "img/iced_latte.jpg",
                 description: "Освежающий холодный кофейный напиток на основе эспрессо и охлажденного молока. Подается со льдом, идеален в жаркую погоду.",
                 price: 370,
                 addons: [
@@ -1074,7 +1144,7 @@
             },
             4: {
                 name: "Макаруны",
-                image: "img/Macaroon.jpg",
+                image: "img/macaroon.jpg",
                 description: "Набор из 4-х нежных французских пирожных с различными вкусами: ваниль, шоколад, малина, фисташка.",
                 price: 320
             },
@@ -1400,6 +1470,7 @@
         function updateCartCount() {
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             document.getElementById('cartCount').textContent = totalItems;
+            document.getElementById('floatingCartCount').textContent = totalItems;
         }
 
         // Рендер корзины
@@ -1591,4 +1662,3 @@
     </script>
 </body>
 </html>
-
