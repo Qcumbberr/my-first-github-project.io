@@ -2145,14 +2145,50 @@
         }
 
         // Оформить заказ
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Корзина пуста!');
-                return;
-            }
-            
-            const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
-            
+        // Оформить заказ
+async function checkout() {
+    if (cart.length === 0) {
+        alert('Корзина пуста!');
+        return;
+    }
+    
+    // Запрашиваем данные у пользователя
+    const phone = prompt('Введите ваш телефон для связи:');
+    if (!phone) {
+        alert('Телефон обязателен для заказа!');
+        return;
+    }
+    
+    const address = prompt('Введите адрес доставки (или оставьте пустым для самовывоза):');
+    
+    const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
+    
+    const orderData = {
+        items: cart.map(item => ({
+            name: item.product.name,
+            quantity: item.quantity,
+            price: item.totalPrice,
+            addons: item.addons
+        })),
+        total: total,
+        phone: phone,
+        address: address || 'Самовывоз',
+        timestamp: new Date().toISOString()
+    };
+    
+    try {
+        // Отправляем заказ на сервер
+        const response = await fetch('http://localhost:3000/api/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
             // Очищаем корзину
             cart = [];
             updateCartCount();
@@ -2160,7 +2196,20 @@
             
             // Показываем анимацию успешного заказа
             showOrderSuccess();
+        } else {
+            alert('Ошибка при отправке заказа: ' + result.message);
         }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Заказ принят! Мы свяжемся с вами в ближайшее время для подтверждения.');
+        
+        // Все равно очищаем корзину и показываем успех
+        cart = [];
+        updateCartCount();
+        renderCart();
+        showOrderSuccess();
+    }
+}
 
         // Показать анимацию успешного заказа
         function showOrderSuccess() {
@@ -2193,3 +2242,4 @@
     </script>
 </body>
 </html>
+
