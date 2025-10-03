@@ -856,6 +856,51 @@
             transform: translateY(-3px);
         }
 
+        /* Плавающая кнопка корзины для мобильных устройств */
+        .mobile-cart-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--brown);
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 98;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-cart-btn:hover {
+            background-color: var(--accent-brown);
+            transform: scale(1.05);
+        }
+
+        .mobile-cart-btn .cart-icon {
+            position: relative;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .mobile-cart-btn .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #e53935;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
         /* Адаптивность */
         @media (max-width: 1024px) {
             .coffee-grid {
@@ -954,6 +999,16 @@
             .success-title {
                 font-size: 1.8rem;
             }
+
+            /* Показываем кнопку корзины на мобильных устройствах */
+            .mobile-cart-btn {
+                display: flex;
+            }
+
+            /* Скрываем иконку корзины в навигации на мобильных устройствах */
+            nav ul li.cart-icon {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1002,6 +1057,13 @@
 
             .success-icon {
                 font-size: 3rem;
+            }
+
+            .mobile-cart-btn {
+                bottom: 15px;
+                right: 15px;
+                width: 55px;
+                height: 55px;
             }
         }
     </style>
@@ -1214,6 +1276,14 @@
     <!-- Кнопка возврата наверх -->
     <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
         ↑
+    </div>
+
+    <!-- Плавающая кнопка корзины для мобильных устройств -->
+    <div class="mobile-cart-btn" onclick="showPage('cart')">
+        <div class="cart-icon">
+            🛒
+            <span class="cart-count" id="mobileCartCount">0</span>
+        </div>
     </div>
 
     <!-- Подвал -->
@@ -1987,6 +2057,7 @@
         function updateCartCount() {
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             document.getElementById('cartCount').textContent = totalItems;
+            document.getElementById('mobileCartCount').textContent = totalItems;
         }
 
         // Рендер корзины
