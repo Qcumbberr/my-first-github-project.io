@@ -2488,6 +2488,7 @@ function hideLoadingIndicator() {
 }
 
 // Завершить заказ
+// Завершить заказ
 async function completeOrder() {
     const name = document.getElementById('customerName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
@@ -2501,7 +2502,6 @@ async function completeOrder() {
         return;
     }
     
-    // ★★★★ ДОБАВЬТЕ ЭТУ ПРОВЕРКУ ВНУТРИ completeOrder ★★★★
     // Валидация телефона
     if (!validatePhoneFormat(phone)) {
         alert('Пожалуйста, введите корректный номер телефона в формате: +7 (999) 999-99-99');
@@ -2518,63 +2518,7 @@ async function completeOrder() {
         // Подготавливаем данные заказа
         const orderData = {
             name,
-            phone: formatPhoneForStorage(phone), // ★★★★ ИСПОЛЬЗУЕМ ФОРМАТИРОВАНИЕ ★★★★
-            address,
-            time,
-            comment,
-            payment,
-            total,
-            items: cart,
-            timestamp: new Date().toLocaleString('ru-RU')
-        };
-        // ... остальной код без изменений ...
-// Функции для индикатора загрузки
-function showLoadingIndicator() {
-    let loader = document.getElementById('loadingIndicator');
-    if (!loader) {
-        loader = document.createElement('div');
-        loader.id = 'loadingIndicator';
-        loader.className = 'loading-indicator';
-        loader.innerHTML = `
-            <div class="loading-spinner"></div>
-            <p>Отправляем заказ...</p>
-        `;
-        document.body.appendChild(loader);
-    }
-    loader.style.display = 'flex';
-}
-
-function hideLoadingIndicator() {
-    const loader = document.getElementById('loadingIndicator');
-    if (loader) {
-        loader.style.display = 'none';
-    }
-}
-
-// Завершить заказ
-async function completeOrder() {
-    const name = document.getElementById('customerName').value;
-    const phone = document.getElementById('customerPhone').value;
-    const address = document.getElementById('deliveryAddress').value;
-    const time = document.getElementById('deliveryTime').value;
-    const comment = document.getElementById('orderComment').value;
-    const payment = document.getElementById('paymentMethod').value;
-    
-    if (!name || !phone || !address || !time) {
-        alert('Пожалуйста, заполните все обязательные поля');
-        return;
-    }
-    
-    const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
-    
-    // Показываем индикатор загрузки
-    showLoadingIndicator();
-    
-    try {
-        // Подготавливаем данные заказа
-        const orderData = {
-            name,
-            phone,
+            phone: formatPhoneForStorage(phone),
             address,
             time,
             comment,
@@ -2602,8 +2546,7 @@ async function completeOrder() {
         alert('Произошла ошибка при отправке заказа. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.');
         console.error('Ошибка оформления заказа:', error);
     }
-}
-        // Показать плашку завершения заказа
+}     // Показать плашку завершения заказа
         function showSuccessModal(name, phone, address, time, comment, payment, total) {
             const detailsContainer = document.getElementById('successDetails');
             
@@ -2675,3 +2618,4 @@ async function completeOrder() {
     </script>
 </body>
 </html>
+
