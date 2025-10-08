@@ -2437,18 +2437,7 @@ ${itemsText}
             cart = cart.filter(item => item.id !== itemId);
             updateCartCount();
             renderCart();
-        }
-
-       // Начать оформление заказа
-function startCheckout() {
-    if (cart.length === 0) {
-        alert('Корзина пуста!');
-        return;
-    }
-    
-    showPage('checkout');
-    renderOrderSummary();
-}
+        } 
 // Начать оформление заказа
 function startCheckout() {
     if (cart.length === 0) {
@@ -2463,22 +2452,6 @@ function startCheckout() {
 // ★★★★ ВСТАВЬТЕ ЭТОТ КОД ЗДЕСЬ ★★★★
 
 // Проверка формата телефона
-function validatePhoneFormat(phone) {
-    // Убираем все нецифровые символы кроме +
-    const cleanPhone = phone.replace(/[^\d+]/g, '');
-    
-    // Проверяем разные форматы
-    const patterns = [
-        /^\+7\d{10}$/,           // +79991234567
-        /^8\d{10}$/,             // 89991234567
-        /^7\d{10}$/,             // 79991234567
-        /^\d{11}$/               // 9991234567 (11 цифр)
-    ];
-    
-    return patterns.some(pattern => pattern.test(cleanPhone)) && cleanPhone.length === 11;
-}
-
-// Форматирование телефона для хранения
 function formatPhoneForStorage(phone) {
     const cleanPhone = phone.replace(/\D/g, '');
     
@@ -2491,7 +2464,28 @@ function formatPhoneForStorage(phone) {
     }
 }
 
-// ★★★★ КОНЕЦ ВСТАВКИ ★★★★
+// Функции для индикатора загрузки
+function showLoadingIndicator() {
+    let loader = document.getElementById('loadingIndicator');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.id = 'loadingIndicator';
+        loader.className = 'loading-indicator';
+        loader.innerHTML = `
+            <div class="loading-spinner"></div>
+            <p>Отправляем заказ...</p>
+        `;
+        document.body.appendChild(loader);
+    }
+    loader.style.display = 'flex';
+}
+
+function hideLoadingIndicator() {
+    const loader = document.getElementById('loadingIndicator');
+    if (loader) {
+        loader.style.display = 'none';
+    }
+}
 
 // Завершить заказ
 async function completeOrder() {
@@ -2533,7 +2527,6 @@ async function completeOrder() {
             items: cart,
             timestamp: new Date().toLocaleString('ru-RU')
         };
-        
         // ... остальной код без изменений ...
 // Функции для индикатора загрузки
 function showLoadingIndicator() {
@@ -2682,9 +2675,3 @@ async function completeOrder() {
     </script>
 </body>
 </html>
-
-
-
-
-
-
