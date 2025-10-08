@@ -2448,10 +2448,19 @@ function startCheckout() {
     showPage('checkout');
     renderOrderSummary();
 }
-
-// ★★★★ ВСТАВЬТЕ ЭТОТ КОД ЗДЕСЬ ★★★★
-
 // Проверка формата телефона
+function validatePhoneFormat(phone) {
+    const cleanPhone = phone.replace(/[^\d+]/g, '');
+    const patterns = [
+        /^\+7\d{10}$/,
+        /^8\d{10}$/,
+        /^7\d{10}$/,
+        /^\d{11}$/
+    ];
+    return patterns.some(pattern => pattern.test(cleanPhone));
+}
+
+// Форматирование телефона для хранения
 function formatPhoneForStorage(phone) {
     const cleanPhone = phone.replace(/\D/g, '');
     
@@ -2486,8 +2495,6 @@ function hideLoadingIndicator() {
         loader.style.display = 'none';
     }
 }
-
-// Завершить заказ
 // Завершить заказ
 async function completeOrder() {
     const name = document.getElementById('customerName').value.trim();
@@ -2618,4 +2625,5 @@ async function completeOrder() {
     </script>
 </body>
 </html>
+
 
