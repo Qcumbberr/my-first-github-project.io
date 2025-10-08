@@ -2462,10 +2462,6 @@ async function completeOrder() {
     
     const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
     
-    // Показываем индикатор загрузки
-    showLoadingIndicator();
-    
-    try {
         // Подготавливаем данные заказа
         const orderData = {
             name,
@@ -2568,11 +2564,8 @@ async function completeOrder() {
         `;
         document.head.appendChild(style);
     </script>
-    <div class="loading-indicator" id="loadingIndicator">
-    <div class="loading-spinner"></div>
-    <p>Отправляем заказ...</p>
-</div>
 </body>
 </html>
+
 
 
