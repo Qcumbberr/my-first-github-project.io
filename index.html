@@ -1833,6 +1833,12 @@ ${itemsText}
                         e.preventDefault();
                 }
             });
+                    // Автоматически ставим +7 ( при фокусе если поле пустое
+            document.getElementById('customerPhone').addEventListener('focus', function(e) {
+                if (!this.value.trim()) {
+                    this.value = '+7 (';
+                }
+            });
         }
 
         // Настройка кнопки возврата наверх
@@ -2473,6 +2479,61 @@ ${itemsText}
             updateCartCount();
             renderCart();
         } 
+    function formatPhoneInput(phone) {
+    // Убираем все нецифровые символы кроме + и пробелов
+    let cleaned = phone.replace(/[^\d+\s\(\)\-]/g, '');
+    
+    // Если начинаем вводить цифры без +7, автоматически добавляем +7 (
+    if (/^[0-9]/.test(phone) && !phone.startsWith('+7')) {
+        cleaned = '+7 (' + phone.replace(/\D/g, '');
+    }
+    
+    // Если начинаем с + но нет 7, добавляем 7 (
+    if (phone.startsWith('+') && phone.length === 1) {
+        cleaned = '+7 (';
+    }
+    
+    // Форматируем по шаблону +7 (999) 999 99-99
+    let formatted = '+7 (';
+    
+    // Добавляем первые 3 цифры
+    const digits = cleaned.replace(/\D/g, '').substring(1); // убираем первую 7
+    if (digits.length > 0) {
+        formatted += digits.substring(0, 3);
+    }
+    
+    // Добавляем закрывающую скобку и пробел
+    if (digits.length >= 3) {
+        formatted += ') ';
+    }
+    
+    // Добавляем следующие 3 цифры
+    if (digits.length > 3) {
+        formatted += digits.substring(3, 6);
+    }
+    
+    // Добавляем пробел
+    if (digits.length >= 6) {
+        formatted += ' ';
+    }
+    
+    // Добавляем следующие 2 цифры
+    if (digits.length > 6) {
+        formatted += digits.substring(6, 8);
+    }
+    
+    // Добавляем дефис
+    if (digits.length >= 8) {
+        formatted += '-';
+    }
+    
+    // Добавляем последние 2 цифры
+    if (digits.length > 8) {
+        formatted += digits.substring(8, 10);
+    }
+    
+    return formatted;
+}
 // Начать оформление заказа
 function startCheckout() {
     if (cart.length === 0) {
@@ -2660,6 +2721,7 @@ async function completeOrder() {
     </script>
 </body>
 </html>
+
 
 
 
