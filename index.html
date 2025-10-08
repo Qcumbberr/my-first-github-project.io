@@ -2425,6 +2425,12 @@ ${itemsText}
         }
 // Функции для индикатора загрузки
 function showLoadingIndicator() {
+    document.getElementById('loadingIndicator').style.display = 'flex';
+}
+
+function hideLoadingIndicator() {
+    document.getElementById('loadingIndicator').style.display = 'none';
+}
     // Создаем индикатор если его нет
     let loader = document.getElementById('loadingIndicator');
     if (!loader) {
@@ -2440,12 +2446,6 @@ function showLoadingIndicator() {
     loader.style.display = 'flex';
 }
 
-function hideLoadingIndicator() {
-    const loader = document.getElementById('loadingIndicator');
-    if (loader) {
-        loader.style.display = 'none';
-    }
-}
         // Завершить заказ
 async function completeOrder() {
     const name = document.getElementById('customerName').value;
@@ -2568,6 +2568,11 @@ async function completeOrder() {
         `;
         document.head.appendChild(style);
     </script>
+    <div class="loading-indicator" id="loadingIndicator">
+    <div class="loading-spinner"></div>
+    <p>Отправляем заказ...</p>
+</div>
 </body>
 </html>
+
 
