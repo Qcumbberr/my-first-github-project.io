@@ -2413,25 +2413,19 @@ ${itemsText}
             renderCart();
         }
 
-        // Начать оформление заказа
-        function startCheckout() {
-            if (cart.length === 0) {
-                alert('Корзина пуста!');
-                return;
-            }
-            
-            showPage('checkout');
-            renderOrderSummary();
-        }
-// Функции для индикатора загрузки
-function showLoadingIndicator() {
-    document.getElementById('loadingIndicator').style.display = 'flex';
+       // Начать оформление заказа
+function startCheckout() {
+    if (cart.length === 0) {
+        alert('Корзина пуста!');
+        return;
+    }
+    
+    showPage('checkout');
+    renderOrderSummary();
 }
 
-function hideLoadingIndicator() {
-    document.getElementById('loadingIndicator').style.display = 'none';
-}
-    // Создаем индикатор если его нет
+// Функции для индикатора загрузки
+function showLoadingIndicator() {
     let loader = document.getElementById('loadingIndicator');
     if (!loader) {
         loader = document.createElement('div');
@@ -2446,7 +2440,14 @@ function hideLoadingIndicator() {
     loader.style.display = 'flex';
 }
 
-        // Завершить заказ
+function hideLoadingIndicator() {
+    const loader = document.getElementById('loadingIndicator');
+    if (loader) {
+        loader.style.display = 'none';
+    }
+}
+
+// Завершить заказ
 async function completeOrder() {
     const name = document.getElementById('customerName').value;
     const phone = document.getElementById('customerPhone').value;
@@ -2462,6 +2463,10 @@ async function completeOrder() {
     
     const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
     
+    // Показываем индикатор загрузки
+    showLoadingIndicator();
+    
+    try {
         // Подготавливаем данные заказа
         const orderData = {
             name,
@@ -2566,6 +2571,7 @@ async function completeOrder() {
     </script>
 </body>
 </html>
+
 
 
 
