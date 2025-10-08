@@ -900,7 +900,35 @@
             font-size: 0.8rem;
             font-weight: bold;
         }
+.loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2001;
+    flex-direction: column;
+    color: white;
+}
 
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid var(--brown);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
         /* Адаптивность */
         @media (max-width: 1024px) {
             .coffee-grid {
@@ -1635,6 +1663,78 @@
                 nutrition: { calories: 480, protein: 7, fat: 28, carbs: 52 }
             }
         };
+        // Функция отправки заказа в Telegram
+async function sendOrderToTelegram(orderData) {
+    const botToken = '8445747842:AAG83PqJFmeDuLt9tuwcJCblHDITzyr-jEo'; // Замените на ваш токен
+    const chatId = '5167204821';     // Замените на ваш Chat ID
+    
+    // Форматируем сообщение для Telegram
+    const message = formatOrderMessage(orderData);
+    
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: 'HTML'
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.ok) {
+            console.log('Заказ отправлен в Telegram');
+            return true;
+        } else {
+            console.error('Ошибка отправки в Telegram:', result);
+            return false;
+        }
+    } catch (error) {
+        console.error('Ошибка сети:', error);
+        return false;
+    }
+}
+
+// Функция форматирования сообщения для Telegram
+function formatOrderMessage(orderData) {
+    const { name, phone, address, time, comment, payment, total, items } = orderData;
+    
+    let paymentText = '';
+    switch(payment) {
+        case 'cash': paymentText = '💵 Наличными при получении'; break;
+        case 'card': paymentText = '💳 Картой онлайн'; break;
+        case 'card_courier': paymentText = '💳 Картой курьеру'; break;
+    }
+    
+    let itemsText = '';
+    items.forEach(item => {
+        const addonsText = item.addons.length > 0 
+            ? `\n    ➕ Допы: ${item.addons.map(a => a.name).join(', ')}`
+            : '';
+        itemsText += `• ${item.product.name} × ${item.quantity} - ${item.totalPrice * item.quantity}₽${addonsText}\n`;
+    });
+    
+    return `
+🆕 <b>НОВЫЙ ЗАКАЗ</b>
+
+👤 <b>Клиент:</b> ${name}
+📞 <b>Телефон:</b> ${phone}
+📍 <b>Адрес:</b> ${address}
+⏰ <b>Время доставки:</b> ${time}
+💳 <b>Оплата:</b> ${paymentText}
+
+🛒 <b>Заказ:</b>
+${itemsText}
+
+💰 <b>Итого:</b> ${total}₽
+
+📝 <b>Комментарий:</b> ${comment || 'нет'}
+    `.trim();
+}
 
         // Переменные для состояния приложения
         let cart = [];
@@ -2323,27 +2423,81 @@
             showPage('checkout');
             renderOrderSummary();
         }
+// Функции для индикатора загрузки
+function showLoadingIndicator() {
+    // Создаем индикатор если его нет
+    let loader = document.getElementById('loadingIndicator');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.id = 'loadingIndicator';
+        loader.className = 'loading-indicator';
+        loader.innerHTML = `
+            <div class="loading-spinner"></div>
+            <p>Отправляем заказ...</p>
+        `;
+        document.body.appendChild(loader);
+    }
+    loader.style.display = 'flex';
+}
 
+function hideLoadingIndicator() {
+    const loader = document.getElementById('loadingIndicator');
+    if (loader) {
+        loader.style.display = 'none';
+    }
+}
         // Завершить заказ
-        function completeOrder() {
-            const name = document.getElementById('customerName').value;
-            const phone = document.getElementById('customerPhone').value;
-            const address = document.getElementById('deliveryAddress').value;
-            const time = document.getElementById('deliveryTime').value;
-            const comment = document.getElementById('orderComment').value;
-            const payment = document.getElementById('paymentMethod').value;
-            
-            if (!name || !phone || !address || !time) {
-                alert('Пожалуйста, заполните все обязательные поля');
-                return;
-            }
-            
-            const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
-            
-            // Показываем плашку завершения заказа
+async function completeOrder() {
+    const name = document.getElementById('customerName').value;
+    const phone = document.getElementById('customerPhone').value;
+    const address = document.getElementById('deliveryAddress').value;
+    const time = document.getElementById('deliveryTime').value;
+    const comment = document.getElementById('orderComment').value;
+    const payment = document.getElementById('paymentMethod').value;
+    
+    if (!name || !phone || !address || !time) {
+        alert('Пожалуйста, заполните все обязательные поля');
+        return;
+    }
+    
+    const total = cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
+    
+    // Показываем индикатор загрузки
+    showLoadingIndicator();
+    
+    try {
+        // Подготавливаем данные заказа
+        const orderData = {
+            name,
+            phone,
+            address,
+            time,
+            comment,
+            payment,
+            total,
+            items: cart,
+            timestamp: new Date().toLocaleString('ru-RU')
+        };
+        
+        // Отправляем заказ в Telegram
+        const telegramSuccess = await sendOrderToTelegram(orderData);
+        
+        // Скрываем индикатор загрузки
+        hideLoadingIndicator();
+        
+        if (telegramSuccess) {
+            // Показываем успешное оформление
             showSuccessModal(name, phone, address, time, comment, payment, total);
+        } else {
+            alert('Произошла ошибка при отправке заказа. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.');
         }
-
+        
+    } catch (error) {
+        hideLoadingIndicator();
+        alert('Произошла ошибка при отправке заказа. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.');
+        console.error('Ошибка оформления заказа:', error);
+    }
+}
         // Показать плашку завершения заказа
         function showSuccessModal(name, phone, address, time, comment, payment, total) {
             const detailsContainer = document.getElementById('successDetails');
@@ -2416,3 +2570,4 @@
     </script>
 </body>
 </html>
+
