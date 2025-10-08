@@ -1798,6 +1798,41 @@ ${itemsText}
 
             // Добавление в корзину
             document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+                     // Закрытие модального окна
+                document.querySelector('.close-modal').addEventListener('click', closeModal);
+                document.getElementById('coffeeModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+    // Мобильное меню
+                document.getElementById('menuToggle').addEventListener('click', toggleMobileMenu);
+
+    // Добавление в корзину
+                document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+    // ★★★★ ДОБАВЬ ЭТОТ КОД СЮДА ★★★★
+    // Обработчик для автоматического форматирования телефона
+                document.getElementById('customerPhone').addEventListener('input', function(e) {
+                this.value = formatPhoneInput(this.value);
+         });
+    
+    // Ограничение ввода только цифр и +
+        document.getElementById('customerPhone').addEventListener('keydown', function(e) {
+        // Разрешаем: backspace, delete, tab, escape, enter, стрелки
+            if ([8, 9, 27, 13, 46, 37, 38, 39, 40].includes(e.keyCode) || 
+            // Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                (e.ctrlKey && [65, 67, 86, 88].includes(e.keyCode))) {
+                return;
+            }
+        
+        // Разрешаем только цифры, +, Delete, Backspace
+                if (!((e.keyCode >= 48 && e.keyCode <= 57) || 
+                      (e.keyCode >= 96 && e.keyCode <= 105) ||
+                      e.keyCode === 107 || e.keyCode === 187 || 
+                      e.keyCode === 8 || e.keyCode === 46)) {
+                        e.preventDefault();
+                }
+            });
         }
 
         // Настройка кнопки возврата наверх
@@ -2625,5 +2660,6 @@ async function completeOrder() {
     </script>
 </body>
 </html>
+
 
 
